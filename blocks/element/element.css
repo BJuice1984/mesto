@@ -1,0 +1,13 @@
+.element {
+  display: grid;
+  background-color: #fff;
+  width: 282px;
+  height: 361px;
+  margin: 0;
+  border-radius: 10px;
+  grid-template-columns: 1fr min-content;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+  "element__photo element__photo"
+  "element__name element__button-heart-like";
+}
