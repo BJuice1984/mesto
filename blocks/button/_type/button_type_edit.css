@@ -1,0 +1,23 @@
+.button_type_edit {
+  grid-area: button_type_edit;
+  justify-self: start;
+  align-self: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #fff;
+}
+
+@media screen and (min-width: 768px) {
+  .button_type_edit {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .button_type_edit {
+    align-self: end;
+    width: 24px;
+    height: 24px;
+  }
+}

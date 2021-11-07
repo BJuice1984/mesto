@@ -1,0 +1,18 @@
+.button__pic_type_edit {  
+  width: 7.5px;
+  height: 7.5px;
+}
+
+@media screen and (min-width: 768px) {
+  .button__pic_type_edit {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .button__pic_type_edit {
+    width: 10px;
+    height: 10px;
+  }
+}

@@ -1,0 +1,11 @@
+.button__pic_type_add {
+  width: 16px;
+  height: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .button__pic_type_add {
+    width: 24px;
+    height: 24px;
+  }
+}

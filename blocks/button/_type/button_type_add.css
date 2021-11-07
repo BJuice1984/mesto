@@ -1,0 +1,22 @@
+.button_type_add {
+  grid-area: button_type_add;
+  justify-self: center;
+  width: 282px;
+  height: 50px;
+  border: 2px solid #fff;
+  display: block;
+}
+
+@media screen and (min-width: 768px) {
+  .button_type_add {
+    width: calc(100vw - (100px * 2));
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .button_type_add {
+    width: 150px;
+    align-self: center;
+    justify-self: end;
+  }
+}

@@ -1,0 +1,28 @@
+.profile__info {
+  grid-area: profile__info;
+  justify-self: end;
+  color: #fff;
+  font-size: 27px;
+  line-height: 33px;
+  text-decoration: none;
+  margin: 0;
+  font-weight: 500;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 768px) {
+  .profile__info {
+    font-size: 42px;
+    line-height: 48px;
+    padding-left: 20px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .profile__info {
+    justify-self: start;
+    align-self: end;
+    margin-bottom: -8px;
+  }
+}
