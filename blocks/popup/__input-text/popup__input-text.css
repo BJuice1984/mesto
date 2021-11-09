@@ -1,0 +1,49 @@
+.popup__input-text {
+  border: 0;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: normal;
+  padding-bottom: 13px;
+  color: #000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: transparent;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.popup__input-text:last-child {
+  margin-top: 30px;
+}
+
+.popup__input-text:focus {
+  outline-color: rgb(63, 162, 243);
+}
+/*.popup__input-text::placeholder {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: normal;
+  color: #000;
+}
+
+.popup__input-text::-webkit-input-placeholder {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: normal;
+  color: #000;
+} 
+
+.popup__input-text::-moz-placeholder {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: normal;
+  color: #000;
+} 
+
+.popup__input-text::-ms-input-placeholder {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: normal;
+  color: #000;
+} 
+*/

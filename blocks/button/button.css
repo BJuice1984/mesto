@@ -2,7 +2,7 @@
   background-color: #000;
   appearance: none;
   cursor: pointer;
-  box-sizing: border-box;
+  border: none;
   margin: 0;
   padding: 0;
   display: flex;
