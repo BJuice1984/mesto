@@ -12,7 +12,7 @@
 @import url("../blocks/button/_pic/button__pic_type_edit.css");
 @import url("../blocks/profile/__description/profile__description.css");
 @import url("../blocks/button/_type/button_type_add.css");
-@import url("../blocks/button/_pic/button__pic_type_add.css");
+@import url("../blocks/button/__pic/button__pic_type_add.css");
 @import url("../blocks/elements/elements.css");
 @import url("../blocks/element/element.css");
 @import url("../blocks/element/__photo/element__photo.css");
