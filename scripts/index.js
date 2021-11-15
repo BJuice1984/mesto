@@ -24,7 +24,7 @@ let descriptionProfile = document.querySelector('.profile__description');
 function popupOpen() {
   popupElement.classList.add('popup__opened');
   infoInput.value = infoProfile.textContent; //Запись в форму значений из профиля
-  descriptionInput.value = descriptionProfile.textContent; //Запись в форму значений из профиля  
+  descriptionInput.value = descriptionProfile.textContent; //Запись в форму значений из профиля
 }
 
 function popupClose() {
