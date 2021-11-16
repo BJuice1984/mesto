@@ -17,7 +17,7 @@
 @import url("../blocks/element/element.css");
 @import url("../blocks/element/__photo/element__photo.css");
 @import url("../blocks/element/__name/element__name.css");
-@import url("../blocks/element/__button-heart-like/element__button-heart-like.css");
+@import url("../blocks/button/_type/button_type_heart-like.css");
 @import url("../blocks/button/__pic/_type/button__pic_type_heart.css");
 @import url("../blocks/footer/footer.css");
 @import url("../blocks/footer/__author/footer__author.css");

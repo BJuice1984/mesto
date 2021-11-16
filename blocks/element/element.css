@@ -9,5 +9,5 @@
   grid-template-rows: repeat(2, 1fr);
   grid-template-areas:
   "element__photo element__photo"
-  "element__name element__button-heart-like";
+  "element__name button_type_heart-like";
 }
