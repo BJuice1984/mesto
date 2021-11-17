@@ -7,6 +7,19 @@
   font-size: 14px;
   line-height: 17px;
   font-weight: normal;
+  background-color: #000;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+.popup__save-button:hover {
+  opacity: 0.8;
+  transition: 0.2s ease-in-out;
 }
 
 @media screen and (min-width: 768px) {
