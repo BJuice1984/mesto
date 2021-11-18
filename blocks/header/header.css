@@ -1,14 +1,13 @@
 .header {
     padding: 28px 0 31.6px 27px;
     background-color: #000;
-    border-bottom: 1px solid #545454;
+    border-bottom: 1px solid rgb(33%, 33%, 33%, 1);
   }
-  
+
   @media screen and (min-width: 768px) {
     .header {
       padding: 45px 0 41px 0px;
     }
   }
-  
 
-  
+

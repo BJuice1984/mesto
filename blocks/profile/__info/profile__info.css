@@ -7,11 +7,11 @@
   text-decoration: none;
   margin: 0;
   font-weight: 500;
-  margin-right: 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   max-width: 210px;
+  padding-left: 20px;
 }
 
 @media screen and (min-width: 768px) {
@@ -19,6 +19,7 @@
     font-size: 42px;
     line-height: 48px;
     max-width: 510px;
+    padding-left: 0;
   }
 }
 
@@ -27,7 +28,6 @@
     padding-left: 20px;
     justify-self: start;
     align-self: end;
-    margin-bottom: -8px;
     max-width: 380px;
   }
 }

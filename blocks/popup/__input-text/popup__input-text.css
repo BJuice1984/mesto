@@ -10,40 +10,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  outline: none;
 }
 
-.popup__input-text:last-child {
-  margin-top: 30px;
+.popup__input-text:last-of-type {
+  padding-top: 25px;
 }
-
-.popup__input-text:focus {
-  outline-color: rgb(63, 162, 243);
-}
-/*.popup__input-text::placeholder {
-  font-size: 14px;
-  line-height: 17px;
-  font-weight: normal;
-  color: #000;
-}
-
-.popup__input-text::-webkit-input-placeholder {
-  font-size: 14px;
-  line-height: 17px;
-  font-weight: normal;
-  color: #000;
-} 
-
-.popup__input-text::-moz-placeholder {
-  font-size: 14px;
-  line-height: 17px;
-  font-weight: normal;
-  color: #000;
-} 
-
-.popup__input-text::-ms-input-placeholder {
-  font-size: 14px;
-  line-height: 17px;
-  font-weight: normal;
-  color: #000;
-} 
-*/

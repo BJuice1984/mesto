@@ -1,4 +1,4 @@
-.button {  
+.button {
   background-color: #000;
   appearance: none;
   cursor: pointer;
@@ -12,7 +12,7 @@
 }
 
 .button:hover {
-  opacity: 0.8;
+  opacity: 0.6;
   transition: 0.2s ease-in-out;
 }
 

@@ -1,12 +1,12 @@
 .profile__avatar {
   grid-area: profile__avatar;
   justify-self: center;
-  border-radius: 127.5px;
-  width: 127.5px;
-  height: 127.5px;
+  border-radius: 125px;
+  width: 125px;
+  height: 125px;
   object-fit: cover;
   margin: 0;
-  margin-bottom: 22.25px;
+  margin-bottom: 25px;
 }
 
 @media screen and (min-width: 768px) {
@@ -19,9 +19,9 @@
 
 @media screen and (min-width: 1024px) {
   .profile__avatar {
-    border-radius: 127.5px;
-    width: 127.5px;
-    height: 127.5px;
+    border-radius: 125px;
+    width: 125px;
+    height: 125px;
     margin-bottom: 0;
   }
 }
