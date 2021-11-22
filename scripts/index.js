@@ -1,7 +1,3 @@
-
-
-
-
 const initialCards = [
   {
     name: 'Архыз',
@@ -29,9 +25,21 @@ const initialCards = [
   }
 ];
 
+const elements = document.querySelector('.elements');
+const template = document.querySelector('.template');
+
+const createElementDomeNode = (item) => {
+  const elementTemplate = template.content.querySelector(".element").cloneNode(true);
+  elementTemplate.querySelector('.element__name').textContent = item.name;
+  elementTemplate.querySelector('.element__photo').src = item.link;
+  return elementTemplate;
+}
+
 const result = initialCards.map((item) => {
- console.log
+  return createElementDomeNode(item);
 });
+
+elements.append(...result);
 
 
 // Находим форму в DOM
@@ -71,4 +79,5 @@ editButton.addEventListener('click', openPopup);
 closeButton.addEventListener('click', closePopup);
 
 formElement.addEventListener('submit', formSubmitHandler);
+
 
