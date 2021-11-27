@@ -28,10 +28,16 @@ const initialCards = [
 const elements = document.querySelector('.elements');
 const template = document.querySelector('.template');
 
+const popupElementImage = document.querySelector('.popup_type_image');
+let curretPopupName = popupElementImage.querySelector('.element__name');
+let curretPopupImage = popupElementImage.querySelector('.element__photo')
+
 const createElementDomeNode = (item) => {
   const elementTemplate = template.content.querySelector(".element").cloneNode(true);
-  elementTemplate.querySelector('.element__name').textContent = item.name;
-  elementTemplate.querySelector('.element__photo').src = item.link;
+  const elementTemplateName = elementTemplate.querySelector('.element__name')
+  const elementTemplateImage = elementTemplate.querySelector('.element__photo')
+  elementTemplateName.textContent = item.name;
+  elementTemplateImage.src = item.link;
 
   const deleteButton = elementTemplate.querySelector('.button_type_delete');
   deleteButton.addEventListener('click', () => {
@@ -41,6 +47,12 @@ const createElementDomeNode = (item) => {
   LikeButton = elementTemplate.querySelector('.button_type_heart-like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('button_type_heart-like-active');
   });
+
+  elementTemplateImage.addEventListener('click', () => {
+    openPopup(popupElementImage);
+    curretPopupName.textContent = elementTemplateName.textContent;
+    curretPopupImage.src = elementTemplateImage.src;
+  })
 
   return elementTemplate;
 }
@@ -71,6 +83,8 @@ const popupElementAdd = document.querySelector('.popup_type_add'); //Карто�
 const closeButtonEdit = document.querySelector('.popup__close-button_type_edit'); //Профиль
 
 const closeButtonAdd = document.querySelector('.popup__close-button_type_add'); //Карточка
+
+const closeButtonImage = document.querySelector('.popup__close-button_type_image'); //КарточкаPopup
 
 const editButton = document.querySelector('.button_type_edit'); //Профиль
 
@@ -124,6 +138,10 @@ closeButtonEdit.addEventListener('click', () => {
 
 closeButtonAdd.addEventListener('click', () => {
   closePopup(popupElementAdd);
+});
+
+closeButtonImage.addEventListener('click', () => {
+  closePopup(popupElementImage);
 });
 
 formElementEdit.addEventListener('submit', formEditSubmitHandler);
