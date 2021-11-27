@@ -29,8 +29,8 @@ const elements = document.querySelector('.elements');
 const template = document.querySelector('.template');
 
 const popupElementImage = document.querySelector('.popup_type_image');
-let curretPopupName = popupElementImage.querySelector('.element__name');
-let curretPopupImage = popupElementImage.querySelector('.element__photo')
+let curretPopupName = popupElementImage.querySelector('.popup__content_type_name');
+let curretPopupImage = popupElementImage.querySelector('.popup__content_type_image')
 
 const createElementDomeNode = (item) => {
   const elementTemplate = template.content.querySelector(".element").cloneNode(true);
