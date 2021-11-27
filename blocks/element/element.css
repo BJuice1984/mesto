@@ -4,6 +4,7 @@
   width: 282px;
   margin: 0;
   border-radius: 10px;
+  position: relative;
   grid-template-columns: 1fr min-content;
   grid-template-rows: 1fr 79px;
   grid-template-areas:

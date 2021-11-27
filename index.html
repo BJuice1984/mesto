@@ -23,61 +23,18 @@
           <p class="profile__description">Исследователь океана</p>
           <button class="button button_type_add" type="button" aria-label="Добавить"></button>
         </section>
-        <section class="elements">
-          <article class="element">
-            <img class="element__photo" src="./images/Домбай.jpg" alt="Изображение загружается" />
-            <h2 class="element__name">Домбай</h2>
-            <button class="button button_type_heart-like" type="button" aria-label="Лайкнуть">
-              <img class="button__pic button__pic_type_heart" src="./images/heart.svg" alt="Рисунок Сердце" />
-            </button>
-          </article>
-          <article class="element">
-            <img class="element__photo" src="./images/Белая_зависть-min.jpg" alt="Изображение загружается" />
-            <h2 class="element__name">Белая зависть</h2>
-            <button class="button button_type_heart-like" type="button" aria-label="Лайкнуть">
-              <img class="button__pic button__pic_type_heart" src="./images/heart.svg" alt="Рисунок Сердце" />
-            </button>
-          </article>
-          <article class="element">
-            <img class="element__photo" src="./images/Калипсо-min.jpg" alt="Изображение загружается" />
-            <h2 class="element__name">Калипсо</h2>
-            <button class="button button_type_heart-like" type="button" aria-label="Лайкнуть">
-              <img class="button__pic button__pic_type_heart" src="./images/heart.svg" alt="Рисунок Сердце" />
-            </button>
-          </article>
-          <article class="element">
-            <img class="element__photo" src="./images/Капитан_на_мостике-min.jpg" alt="Изображение загружается" />
-            <h2 class="element__name">Капитан на мостике!</h2>
-            <button class="button button_type_heart-like" type="button" aria-label="Лайкнуть">
-              <img class="button__pic button__pic_type_heart" src="./images/heart.svg" alt="Рисунок Сердце" />
-            </button>
-          </article>
-          <article class="element">
-            <img class="element__photo" src="./images/Мир_тишины-min.jpg" alt="Изображение загружается" />
-            <h2 class="element__name">Мир тишины</h2>
-            <button class="button button_type_heart-like" type="button" aria-label="Лайкнуть">
-              <img class="button__pic button__pic_type_heart" src="./images/heart.svg" alt="Рисунок Сердце" />
-            </button>
-          </article>
-          <article class="element">
-            <img class="element__photo" src="./images/Скульптура-min.jpg" alt="Изображение загружается" />
-            <h2 class="element__name">Скульптура</h2>
-            <button class="button button_type_heart-like" type="button" aria-label="Лайкнуть">
-              <img class="button__pic button__pic_type_heart" src="./images/heart.svg" alt="Рисунок Сердце" />
-            </button>
-          </article>
-        </section>
+        <section class="elements"></section>
       </main>
       <footer class="footer">
         <p class="footer__author">&copy; 2021. Ильяс Сибгатуллин</p>
       </footer>
     </div>
-    <div class="popup">
+    <div class="popup popup_type_edit">
       <div class="popup__window">
-        <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+        <button class="popup__close-button popup__close-button_type_edit" type="button" aria-label="Закрыть"></button>
         <div class="popup__content">
           <h2 class="popup__header">Редактировать профиль</h2>
-          <form class="popup__input-form">
+          <form class="popup__input-form popup__input-form_type_edit">
             <input type="text" name="profile-info" class="popup__input-text popup__input-text_type_name" value="" />
             <input type="text" name="profile-description" class="popup__input-text popup__input-text_type_description" value="" />
             <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
@@ -85,6 +42,40 @@
         </div>
       </div>
     </div>
+    <div class="popup popup_type_add">
+      <div class="popup__window">
+        <button class="popup__close-button popup__close-button_type_add" type="button" aria-label="Закрыть"></button>
+        <div class="popup__content">
+          <h2 class="popup__header">Новое место</h2>
+          <form class="popup__input-form popup__input-form_type_add">
+            <input type="text" name="element-name" class="popup__input-text popup__input-text_type_name" placeholder="Название" value="" />
+            <input type="url" name="element-photo" class="popup__input-text popup__input-text_type_link" placeholder="Ссылка на картнку" value="" />
+            <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup popup_type_image">
+      <div class="popup__window popup__window_type_image-opened">
+        <button class="popup__close-button popup__close-button_type_image" type="button" aria-label="Закрыть"></button>
+        <figure class="popup__content">
+          <img class="element__photo element__photo_type_image-opened" src="" alt="Изображение загружается" />
+          <figcaption class="element__name element__name_type_image-opened"></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <template class="template">
+      <article class="element">
+        <img class="element__photo" src="${item.link}" alt="Изображение загружается" />
+        <h2 class="element__name">${item.name}</h2>
+        <button class="button button_type_heart-like" type="button" aria-label="Лайкнуть"></button>
+        <button class="button button_type_delete" type="button" aria-label="Удалить"></button>
+      </article>
+    </template>
+
     <script src="./scripts/index.js"></script>
   </body>
 </html>
+
