@@ -1,7 +1,8 @@
-.element__name_type_image-opened {
+.popup__content_type_name {
   font-size: 12px;
   line-height: 15px;
   color: #fff;
   font-weight: 400;
   padding-left: 0;
+  padding-top: 10px;
 }
