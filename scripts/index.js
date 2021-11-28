@@ -29,15 +29,18 @@ const elements = document.querySelector('.elements');
 const template = document.querySelector('.template');
 
 const popupElementImage = document.querySelector('.popup_type_image');
-let curretPopupName = popupElementImage.querySelector('.popup__content_type_name');
-let curretPopupImage = popupElementImage.querySelector('.popup__content_type_image')
+const curretPopupName = popupElementImage.querySelector('.popup__content_type_name');
+const curretPopupImage = popupElementImage.querySelector('.popup__content_type_image');
+const curretPopupAlt = popupElementImage.querySelector('.popup__content_type_image');
 
 const createElementDomeNode = (item) => {
   const elementTemplate = template.content.querySelector(".element").cloneNode(true);
   const elementTemplateName = elementTemplate.querySelector('.element__name')
   const elementTemplateImage = elementTemplate.querySelector('.element__photo')
+  const elementTemplateAlt = elementTemplate.querySelector('.element__photo')
   elementTemplateName.textContent = item.name;
   elementTemplateImage.src = item.link;
+  elementTemplateAlt.alt = elementTemplateName.textContent + ". Изображение загружается либо недоступно";
 
   const deleteButton = elementTemplate.querySelector('.button_type_delete');
   deleteButton.addEventListener('click', () => {
@@ -52,6 +55,7 @@ const createElementDomeNode = (item) => {
     openPopup(popupElementImage);
     curretPopupName.textContent = elementTemplateName.textContent;
     curretPopupImage.src = elementTemplateImage.src;
+    curretPopupAlt.alt = elementTemplateAlt.alt;
   })
 
   return elementTemplate;
@@ -65,16 +69,16 @@ elements.append(...result);
 
 
 // Находим форму в DOM
-let formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
-let formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
+const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
+const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
 // Находим поля формы в formElement
-let infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
-let descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
-let infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
-let descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
+const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
+const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
+const infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
+const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
 // Находим поля профиля в DOM
-let infoProfile = document.querySelector('.profile__info');
-let descriptionProfile = document.querySelector('.profile__description');
+const infoProfile = document.querySelector('.profile__info');
+const descriptionProfile = document.querySelector('.profile__description');
 
 const popupElementEdit = document.querySelector('.popup_type_edit'); //Профиль
 
@@ -99,14 +103,14 @@ function closePopup(popupElement) {
 }
 
  //Профиль
-function formEditSubmitHandler (evt) {
+function handleFormEditSubmit (evt) {
   evt.preventDefault();
   infoProfile.textContent = infoInputEdit.value; //Запись в Профиль введенных значений из формы
   descriptionProfile.textContent = descriptionInputEdit.value; //Запись в Профиль введенных значений из формы
   closePopup(popupElementEdit);
 }
  //Карточка
-const formAddSubmitHandler = (evt) => {
+const handleFormAddSubmit = (evt) => {
   evt.preventDefault();
 
   const nameInputElement = infoInputAdd.value;
@@ -144,8 +148,8 @@ closeButtonImage.addEventListener('click', () => {
   closePopup(popupElementImage);
 });
 
-formElementEdit.addEventListener('submit', formEditSubmitHandler);
+formElementEdit.addEventListener('submit', handleFormEditSubmit);
 
-formElementAdd.addEventListener('submit', formAddSubmitHandler);
+formElementAdd.addEventListener('submit', handleFormAddSubmit);
 
 
