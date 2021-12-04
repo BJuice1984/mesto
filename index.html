@@ -35,10 +35,10 @@
         <div class="popup__content">
           <h2 class="popup__header">Редактировать профиль</h2>
           <form class="popup__input-form popup__input-form_type_edit" novalidate>
-            <input type="text" name="profile-info" class="popup__input-text popup__input-text_type_name" value="" />
-            <span class="popup__input-form_type_error"></span>
-            <input type="text" name="profile-description" class="popup__input-text popup__input-text_type_description" value="" />
-            <span class="popup__input-form_type_error"></span>
+            <input type="text" name="profile-info" class="popup__input-text popup__input-text_type_name" value="" required minlength="7"/>
+            <span class="popup__input-form-error"></span>
+            <input type="text" name="profile-description" class="popup__input-text popup__input-text_type_description" value="" required minlength="7"/>
+            <span class="popup__input-form-error"></span>
             <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
           </form>
         </div>
@@ -51,9 +51,9 @@
           <h2 class="popup__header">Новое место</h2>
           <form class="popup__input-form popup__input-form_type_add" novalidate>
             <input type="text" name="element-name" class="popup__input-text popup__input-text_type_name" placeholder="Название" value="" />
-            <span class="popup__input-form_type_error"></span>
+            <span class="popup__input-form-error"></span>
             <input type="url" name="element-photo" class="popup__input-text popup__input-text_type_link" placeholder="Ссылка на картнку" value="" />
-            <span class="popup__input-form_type_error"></span>
+            <span class="popup__input-form-error"></span>
             <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
           </form>
         </div>
