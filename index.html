@@ -34,9 +34,11 @@
         <button class="popup__close-button popup__close-button_type_edit" type="button" aria-label="Закрыть"></button>
         <div class="popup__content">
           <h2 class="popup__header">Редактировать профиль</h2>
-          <form class="popup__input-form popup__input-form_type_edit">
+          <form class="popup__input-form popup__input-form_type_edit" novalidate>
             <input type="text" name="profile-info" class="popup__input-text popup__input-text_type_name" value="" />
+            <span class="popup__input-form_type_error"></span>
             <input type="text" name="profile-description" class="popup__input-text popup__input-text_type_description" value="" />
+            <span class="popup__input-form_type_error"></span>
             <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
           </form>
         </div>
@@ -47,9 +49,11 @@
         <button class="popup__close-button popup__close-button_type_add" type="button" aria-label="Закрыть"></button>
         <div class="popup__content">
           <h2 class="popup__header">Новое место</h2>
-          <form class="popup__input-form popup__input-form_type_add">
+          <form class="popup__input-form popup__input-form_type_add" novalidate>
             <input type="text" name="element-name" class="popup__input-text popup__input-text_type_name" placeholder="Название" value="" />
+            <span class="popup__input-form_type_error"></span>
             <input type="url" name="element-photo" class="popup__input-text popup__input-text_type_link" placeholder="Ссылка на картнку" value="" />
+            <span class="popup__input-form_type_error"></span>
             <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
           </form>
         </div>
@@ -73,6 +77,7 @@
       </article>
     </template>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>
 
