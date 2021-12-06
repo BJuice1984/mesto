@@ -76,6 +76,7 @@ const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_nam
 const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
 const infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
 const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
+const saveButtonForAdd = formElementAdd.querySelector('.popup__save-button'); //Карточка
 // Находим поля профиля в DOM
 const infoProfile = document.querySelector('.profile__info');
 const descriptionProfile = document.querySelector('.profile__description');
@@ -94,12 +95,33 @@ const editButton = document.querySelector('.button_type_edit'); //Профиль
 
 const addButton = document.querySelector('.button_type_add'); //Карточка
 
+const popupList = document.querySelectorAll('.popup');
+
+  popupList.forEach((popupElement) => {
+    popupElement.addEventListener("click", (evt) => {
+      if (evt.target.classList.contains("popup_opened")) {
+        closePopup(popupElement)
+      }
+    })
+  });
+
+
+function closePopupByEsc(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup)
+  }
+}
+
+
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 
  //Профиль
@@ -123,6 +145,7 @@ const handleFormAddSubmit = (evt) => {
   infoInputAdd.value = '';
   descriptionInputAdd.value = '';
 
+
   closePopup(popupElementAdd);
 }
 
@@ -134,6 +157,8 @@ editButton.addEventListener('click', () => {
 
 addButton.addEventListener('click', () => {
   openPopup(popupElementAdd);
+  saveButtonForAdd.disabled = true;
+  saveButtonForAdd.classList.add('popup__save-button_disabled');
 });
 
 closeButtonEdit.addEventListener('click', () => {
@@ -154,31 +179,9 @@ formElementAdd.addEventListener('submit', handleFormAddSubmit);
 
 
 
-const popupList = document.querySelectorAll('.popup');
-
-const closePopupOpened = () => {
-  popupList.forEach((popupElement) => {
-      if (popupElement.classList.contains('popup_opened')) {
-          closePopup(popupElement);
-      }
-  });
-};
 
 
-document.addEventListener("click", function (evt) {
-  if (evt.target.classList.contains("popup_opened")) {
-    closePopupOpened()
-  };
-});
 
-const closePopupEsc = () => {
-  document.addEventListener('keydown', (evt) => {
-      if (evt.key === "Escape") {
-        closePopupOpened()
-      }
-  });
-};
 
-closePopupEsc();
 
 
