@@ -153,3 +153,31 @@ formElementEdit.addEventListener('submit', handleFormEditSubmit);
 formElementAdd.addEventListener('submit', handleFormAddSubmit);
 
 
+const popupList = document.querySelectorAll('.popup');
+
+const closePopupOpened = () => {
+  popupList.forEach((popupElement) => {
+      if (popupElement.classList.contains('popup_opened')) {
+          closePopup(popupElement);
+      }
+  });
+};
+
+
+document.addEventListener("click", function (evt) {
+  if (evt.target.classList.contains("popup_opened")) {
+    closePopupOpened()
+  };
+});
+
+const closePopupEsc = () => {
+  document.addEventListener('keydown', (evt) => {
+      if (evt.key === "Escape") {
+        closePopupOpened()
+      }
+  });
+};
+
+closePopupEsc();
+
+
