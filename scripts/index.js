@@ -47,7 +47,8 @@ const createElementDomeNode = (item) => {
     elementTemplate.remove()
   });
 
-  LikeButton = elementTemplate.querySelector('.button_type_heart-like').addEventListener('click', function (evt) {
+  const LikeButton = elementTemplate.querySelector('.button_type_heart-like');
+  LikeButton.addEventListener('click', function (evt) {
     evt.target.classList.toggle('button_type_heart-like-active');
   });
 
