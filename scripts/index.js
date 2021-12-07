@@ -85,26 +85,22 @@ const popupElementEdit = document.querySelector('.popup_type_edit'); //Проф�
 
 const popupElementAdd = document.querySelector('.popup_type_add'); //Карточка
 
-const closeButtonEdit = document.querySelector('.popup__close-button_type_edit'); //Профиль
-
-const closeButtonAdd = document.querySelector('.popup__close-button_type_add'); //Карточка
-
-const closeButtonImage = document.querySelector('.popup__close-button_type_image'); //КарточкаPopup
-
 const editButton = document.querySelector('.button_type_edit'); //Профиль
 
 const addButton = document.querySelector('.button_type_add'); //Карточка
 
 const popupList = document.querySelectorAll('.popup');
 
-  popupList.forEach((popupElement) => {
-    popupElement.addEventListener("click", (evt) => {
-      if (evt.target.classList.contains("popup_opened")) {
-        closePopup(popupElement)
-      }
-    })
-  });
-
+popupList.forEach((popupElement) => {
+  popupElement.addEventListener("click", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      closePopup(popupElement)
+    }
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup(popupElement)
+    }
+  })
+});
 
 function closePopupByEsc(evt) {
   if (evt.key === 'Escape') {
@@ -112,7 +108,6 @@ function closePopupByEsc(evt) {
     closePopup(openedPopup)
   }
 }
-
 
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
@@ -131,6 +126,12 @@ function handleFormEditSubmit (evt) {
   descriptionProfile.textContent = descriptionInputEdit.value; //Запись в Профиль введенных значений из формы
   closePopup(popupElementEdit);
 }
+
+function cleanInput () {
+  infoInputAdd.value = '';
+  descriptionInputAdd.value = '';
+};
+
  //Карточка
 const handleFormAddSubmit = (evt) => {
   evt.preventDefault();
@@ -142,9 +143,7 @@ const handleFormAddSubmit = (evt) => {
 
   elements.prepend(createNewElement);
 
-  infoInputAdd.value = '';
-  descriptionInputAdd.value = '';
-
+  cleanInput ();
 
   closePopup(popupElementAdd);
 }
@@ -159,29 +158,10 @@ addButton.addEventListener('click', () => {
   openPopup(popupElementAdd);
   saveButtonForAdd.disabled = true;
   saveButtonForAdd.classList.add('popup__save-button_disabled');
-});
+  cleanInput ();
 
-closeButtonEdit.addEventListener('click', () => {
-  closePopup(popupElementEdit);
-});
-
-closeButtonAdd.addEventListener('click', () => {
-  closePopup(popupElementAdd);
-});
-
-closeButtonImage.addEventListener('click', () => {
-  closePopup(popupElementImage);
 });
 
 formElementEdit.addEventListener('submit', handleFormEditSubmit);
 
 formElementAdd.addEventListener('submit', handleFormAddSubmit);
-
-
-
-
-
-
-
-
-
