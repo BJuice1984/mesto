@@ -76,6 +76,7 @@ const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_nam
 const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
 const infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
 const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
+const saveButtonForAdd = formElementAdd.querySelector('.popup__save-button'); //Карточка
 // Находим поля профиля в DOM
 const infoProfile = document.querySelector('.profile__info');
 const descriptionProfile = document.querySelector('.profile__description');
@@ -84,22 +85,38 @@ const popupElementEdit = document.querySelector('.popup_type_edit'); //Проф�
 
 const popupElementAdd = document.querySelector('.popup_type_add'); //Карточка
 
-const closeButtonEdit = document.querySelector('.popup__close-button_type_edit'); //Профиль
-
-const closeButtonAdd = document.querySelector('.popup__close-button_type_add'); //Карточка
-
-const closeButtonImage = document.querySelector('.popup__close-button_type_image'); //КарточкаPopup
-
 const editButton = document.querySelector('.button_type_edit'); //Профиль
 
 const addButton = document.querySelector('.button_type_add'); //Карточка
 
+const popupList = document.querySelectorAll('.popup');
+
+popupList.forEach((popupElement) => {
+  popupElement.addEventListener("click", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      closePopup(popupElement)
+    }
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup(popupElement)
+    }
+  })
+});
+
+function closePopupByEsc(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup)
+  }
+}
+
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 
  //Профиль
@@ -109,6 +126,12 @@ function handleFormEditSubmit (evt) {
   descriptionProfile.textContent = descriptionInputEdit.value; //Запись в Профиль введенных значений из формы
   closePopup(popupElementEdit);
 }
+
+function cleanInput () {
+  infoInputAdd.value = '';
+  descriptionInputAdd.value = '';
+};
+
  //Карточка
 const handleFormAddSubmit = (evt) => {
   evt.preventDefault();
@@ -120,8 +143,7 @@ const handleFormAddSubmit = (evt) => {
 
   elements.prepend(createNewElement);
 
-  infoInputAdd.value = '';
-  descriptionInputAdd.value = '';
+  cleanInput ();
 
   closePopup(popupElementAdd);
 }
@@ -134,51 +156,12 @@ editButton.addEventListener('click', () => {
 
 addButton.addEventListener('click', () => {
   openPopup(popupElementAdd);
-});
+  saveButtonForAdd.disabled = true;
+  saveButtonForAdd.classList.add('popup__save-button_disabled');
+  cleanInput ();
 
-closeButtonEdit.addEventListener('click', () => {
-  closePopup(popupElementEdit);
-});
-
-closeButtonAdd.addEventListener('click', () => {
-  closePopup(popupElementAdd);
-});
-
-closeButtonImage.addEventListener('click', () => {
-  closePopup(popupElementImage);
 });
 
 formElementEdit.addEventListener('submit', handleFormEditSubmit);
 
 formElementAdd.addEventListener('submit', handleFormAddSubmit);
-
-
-
-const popupList = document.querySelectorAll('.popup');
-
-const closePopupOpened = () => {
-  popupList.forEach((popupElement) => {
-      if (popupElement.classList.contains('popup_opened')) {
-          closePopup(popupElement);
-      }
-  });
-};
-
-
-document.addEventListener("click", function (evt) {
-  if (evt.target.classList.contains("popup_opened")) {
-    closePopupOpened()
-  };
-});
-
-const closePopupEsc = () => {
-  document.addEventListener('keydown', (evt) => {
-      if (evt.key === "Escape") {
-        closePopupOpened()
-      }
-  });
-};
-
-closePopupEsc();
-
-
