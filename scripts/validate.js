@@ -28,7 +28,7 @@ const toggleButtonState = (formElement, buttonElement, inactiveButtonClass) => {
 
 
 const setEventListeners = (formElement, { inputSelector, submitButtonSelector,
-                           inactiveButtonClass, inputErrorClass, errorClass }) => {
+                           inactiveButtonClass, inputErrorClass, errorClass, closeButtonSelector }) => {
   formElement.addEventListener('submit', evt => evt.preventDefault());
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   const buttonElement = formElement.querySelector(submitButtonSelector);
@@ -43,11 +43,11 @@ const setEventListeners = (formElement, { inputSelector, submitButtonSelector,
 
 const enableValidation = (config) => {
   const { formSelector, inputSelector, submitButtonSelector,
-          inactiveButtonClass, inputErrorClass, errorClass } = config
+          inactiveButtonClass, inputErrorClass, errorClass, closeButtonSelector } = config
   const forms = document.querySelectorAll(formSelector);
   forms.forEach((form) => {
     const newObj = { inputSelector, submitButtonSelector,
-                     inactiveButtonClass, inputErrorClass, errorClass };
+                     inactiveButtonClass, inputErrorClass, errorClass, closeButtonSelector };
     setEventListeners(form, newObj);
     })
   };
@@ -58,7 +58,8 @@ const enableValidation = (config) => {
     submitButtonSelector: '.popup__save-button',
     inactiveButtonClass: 'popup__save-button_disabled',
     inputErrorClass: 'popup__input-text_type_error',
-    errorClass: 'popup__input-form-error_active'
+    errorClass: 'popup__input-form-error_active',
+    closeButtonSelector: '.popup__close-button'
   }
 
 
