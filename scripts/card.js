@@ -39,3 +39,5 @@ export class Card {
   };
 
 }
+
+// const popupElementImage = document.querySelector('.popup_type_image');
