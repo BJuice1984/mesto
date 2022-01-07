@@ -35,7 +35,20 @@ initialCards.forEach((item) => {
   newItem.render(cardContainer);
 });
 
+import { FormValidator } from './validate.js';
 
+// Находим форму в DOM
+const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
+const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
+
+const addFormValidator = new FormValidator(formElementAdd);
+// debugger;
+addFormValidator.enableValidation();
+
+
+const editFormValidator = new FormValidator(formElementEdit);
+// debugger;
+editFormValidator.enableValidation();
 
 
 // const cardContainer = document.querySelector('.elements');
@@ -61,10 +74,10 @@ initialCards.forEach((item) => {
 //   });
 
 
-  // const likeButton = elementTemplate.querySelector('.button_type_heart-like');
-  // likeButton.addEventListener('click', function (evt) {
-  //   evt.target.classList.toggle('button_type_heart-like-active');
-  // });
+//   const likeButton = elementTemplate.querySelector('.button_type_heart-like');
+//   likeButton.addEventListener('click', function (evt) {
+//     evt.target.classList.toggle('button_type_heart-like-active');
+//   });
 
 //   elementTemplateImage.addEventListener('click', () => {
 //     openPopup(popupElementImage);
@@ -83,16 +96,20 @@ initialCards.forEach((item) => {
 // cardContainer.append(...result);
 
 
-// Находим форму в DOM
-const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
-const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
+
+
+
+
+// // Находим форму в DOM
+// const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
+// const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
 // Находим поля формы в formElement
 const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
 const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
 const infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
 const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
 const saveButtonForAdd = formElementAdd.querySelector('.popup__save-button'); //Карточка
-// Находим поля профиля в DOM
+// // Находим поля профиля в DOM
 const infoProfile = document.querySelector('.profile__info');
 const descriptionProfile = document.querySelector('.profile__description');
 
@@ -142,7 +159,7 @@ function handleFormEditSubmit (evt) {
   closePopup(popupElementEdit);
 }
 
-function cleanInput () {
+function cleanInput() {
   infoInputAdd.value = '';
   descriptionInputAdd.value = '';
 };
@@ -154,11 +171,11 @@ const handleFormAddSubmit = (evt) => {
   const nameInputElement = infoInputAdd.value;
   const linkInputElement = descriptionInputAdd.value;
 
-  const createNewElement = createElementDomeNode({ name: nameInputElement, link: linkInputElement });
+  const createNewElement = new Card({ name: nameInputElement, link: linkInputElement }, cardTemplate);
 
-  cardContainer.prepend(createNewElement);
+  createNewElement.render(cardContainer);
 
-  cleanInput ();
+  cleanInput();
 
   closePopup(popupElementAdd);
 }
@@ -173,7 +190,7 @@ addButton.addEventListener('click', () => {
   openPopup(popupElementAdd);
   saveButtonForAdd.disabled = true;
   saveButtonForAdd.classList.add('popup__save-button_disabled');
-  cleanInput ();
+  cleanInput();
 
 });
 

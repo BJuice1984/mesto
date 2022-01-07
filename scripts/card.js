@@ -4,7 +4,6 @@ export class Card {
     this._link = items.link;
     this._alt = items.name;
     this._template = template;
-    this._deleteButton = this._deleteButton.bind(this);
   }
 
   _createView() {
@@ -18,8 +17,6 @@ export class Card {
   _likeButton(evt) {
     evt.target.classList.toggle('button_type_heart-like-active');
   };
-
-
 
   _addEventListeners () {
     this._view.querySelector('.button_type_heart-like').addEventListener('click', (evt) => {
@@ -35,9 +32,7 @@ export class Card {
     this._view.querySelector('.element__photo').src = this._link;
     this._view.querySelector('.element__photo').alt = this._alt + ". Изображение загружается либо недоступно";
     this._addEventListeners();
-    container.append(this._view);
+    container.prepend(this._view);
   };
 
 }
-
-// const popupElementImage = document.querySelector('.popup_type_image');
