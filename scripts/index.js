@@ -44,11 +44,13 @@ const formElementAdd = document.querySelector('.popup__input-form_type_add'); //
 const addFormValidator = new FormValidator(formElementAdd);
 // debugger;
 addFormValidator.enableValidation();
+// addFormValidator.clearError(addFormValidator);
 
 
 const editFormValidator = new FormValidator(formElementEdit);
 // debugger;
 editFormValidator.enableValidation();
+// editFormValidator.clearError(editFormValidator);
 
 
 // const cardContainer = document.querySelector('.elements');
@@ -62,7 +64,7 @@ editFormValidator.enableValidation();
 // const createElementDomeNode = (item) => {
 //   const elementTemplate = cardTemplate.content.querySelector(".element").cloneNode(true);
 //   const elementTemplateName = elementTemplate.querySelector('.element__name')
-//   const elementTemplateImage = elementTemplate.querySelector('.element__photo')
+  // const elementTemplateImage = elementTemplate.querySelector('.element__photo')
 //   const elementTemplateAlt = elementTemplate.querySelector('.element__photo')
 //   elementTemplateName.textContent = item.name;
 //   elementTemplateImage.src = item.link;
@@ -79,12 +81,12 @@ editFormValidator.enableValidation();
 //     evt.target.classList.toggle('button_type_heart-like-active');
 //   });
 
-//   elementTemplateImage.addEventListener('click', () => {
-//     openPopup(popupElementImage);
-//     curretPopupName.textContent = elementTemplateName.textContent;
-//     curretPopupImage.src = elementTemplateImage.src;
-//     curretPopupAlt.alt = elementTemplateAlt.alt;
-//   })
+  // elementTemplateImage.addEventListener('click', () => {
+  //   openPopup(popupElementImage);
+  //   curretPopupName.textContent = elementTemplateName.textContent;
+  //   curretPopupImage.src = elementTemplateImage.src;
+  //   curretPopupAlt.alt = elementTemplateAlt.alt;
+  // })
 
 //   return elementTemplate;
 // }
@@ -96,13 +98,6 @@ editFormValidator.enableValidation();
 // cardContainer.append(...result);
 
 
-
-
-
-
-// // Находим форму в DOM
-// const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
-// const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
 // Находим поля формы в formElement
 const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
 const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль

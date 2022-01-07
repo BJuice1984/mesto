@@ -55,7 +55,15 @@ export class FormValidator {
     forms.forEach((form) => {
       form.addEventListener('submit', evt => evt.preventDefault());
       this._setEventListeners(form);
-      })
-    };
+    })
+  };
+
+  // clearError(inputElement) {
+  //   // const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+  //   inputElement.classList.remove(this._inputErrorClass);
+  //   errorElement.classList.remove(this._errorClass);
+  //   errorElement.textContent = '';
+  //   debugger;
+  // };
 
 }
