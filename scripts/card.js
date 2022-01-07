@@ -1,5 +1,4 @@
-import { array } from './popupElementImage';
-
+import { popupElementImage } from './popupElementImage.js';
 
 export class Card {
   constructor(items, template) {
@@ -21,13 +20,8 @@ export class Card {
     evt.target.classList.toggle('button_type_heart-like-active');
   };
 
-  _openPopups = () => {
-
-
-
-    console.log(array); // [1, 2, 3]
-
-    // debugger;
+  _openPopupImage = () => {
+    popupElementImage(this._name, this._link, this._alt);
   };
 
   _addEventListeners () {
@@ -37,7 +31,7 @@ export class Card {
 
     this._view.querySelector('.button_type_delete').addEventListener('click', this._deleteButton);
 
-    this._view.querySelector('.element__photo').addEventListener('click', this._openPopups);
+    this._view.querySelector('.element__photo').addEventListener('click', this._openPopupImage);
   };
 
   render(container) {

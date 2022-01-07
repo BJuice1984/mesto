@@ -1,8 +1,11 @@
-// const popupElementImage = this._view.querySelector('.popup_type_image');
-// popupElementImage.classList.add('popup_opened');
+export function popupElementImage(name, link, alt) {
+  const popupElementImage = document.querySelector('.popup_type_image');
+  const curretPopupName = popupElementImage.querySelector('.popup__content_type_name');
+  const curretPopupImage = popupElementImage.querySelector('.popup__content_type_image');
+  const curretPopupAlt = popupElementImage.querySelector('.popup__content_type_image');
 
-const array = [1, 2, 3, 4];
-
-export { array };
-
-
+  curretPopupName.textContent = name;
+  curretPopupImage.src = link;
+  curretPopupAlt.alt = alt;
+  popupElementImage.classList.add('popup_opened');
+}
