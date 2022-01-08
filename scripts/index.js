@@ -25,54 +25,28 @@ const initialCards = [
   }
 ];
 
-const elements = document.querySelector('.elements');
-const template = document.querySelector('.template');
+import { Card } from './card.js';
 
-const popupElementImage = document.querySelector('.popup_type_image');
-const curretPopupName = popupElementImage.querySelector('.popup__content_type_name');
-const curretPopupImage = popupElementImage.querySelector('.popup__content_type_image');
-const curretPopupAlt = popupElementImage.querySelector('.popup__content_type_image');
+const cardTemplate = document.querySelector('.template').content;
+const cardContainer = document.querySelector('.elements');
 
-const createElementDomeNode = (item) => {
-  const elementTemplate = template.content.querySelector(".element").cloneNode(true);
-  const elementTemplateName = elementTemplate.querySelector('.element__name')
-  const elementTemplateImage = elementTemplate.querySelector('.element__photo')
-  const elementTemplateAlt = elementTemplate.querySelector('.element__photo')
-  elementTemplateName.textContent = item.name;
-  elementTemplateImage.src = item.link;
-  elementTemplateAlt.alt = elementTemplateName.textContent + ". Изображение загружается либо недоступно";
-
-  const deleteButton = elementTemplate.querySelector('.button_type_delete');
-  deleteButton.addEventListener('click', () => {
-    elementTemplate.remove()
-  });
-
-
-  const likeButton = elementTemplate.querySelector('.button_type_heart-like');
-  likeButton.addEventListener('click', function (evt) {
-    evt.target.classList.toggle('button_type_heart-like-active');
-  });
-
-  elementTemplateImage.addEventListener('click', () => {
-    openPopup(popupElementImage);
-    curretPopupName.textContent = elementTemplateName.textContent;
-    curretPopupImage.src = elementTemplateImage.src;
-    curretPopupAlt.alt = elementTemplateAlt.alt;
-  })
-
-  return elementTemplate;
-}
-
-const result = initialCards.map((item) => {
-  return createElementDomeNode(item);
+initialCards.forEach((item) => {
+  const newItem = new Card(item, cardTemplate);
+  newItem.render(cardContainer);
 });
 
-elements.append(...result);
-
+import { FormValidator } from './validate.js';
 
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
 const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
+
+const addFormValidator = new FormValidator(formElementAdd);
+addFormValidator.enableValidation();
+
+const editFormValidator = new FormValidator(formElementEdit);
+editFormValidator.enableValidation();
+
 // Находим поля формы в formElement
 const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
 const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
@@ -114,6 +88,8 @@ function closePopupByEsc(evt) {
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupByEsc);
+  const inputClearError = new FormValidator(popupElement);
+  inputClearError.clearError();
 }
 
 function closePopup(popupElement) {
@@ -129,7 +105,7 @@ function handleFormEditSubmit (evt) {
   closePopup(popupElementEdit);
 }
 
-function cleanInput () {
+function cleanInput() {
   infoInputAdd.value = '';
   descriptionInputAdd.value = '';
 };
@@ -141,11 +117,11 @@ const handleFormAddSubmit = (evt) => {
   const nameInputElement = infoInputAdd.value;
   const linkInputElement = descriptionInputAdd.value;
 
-  const createNewElement = createElementDomeNode({ name: nameInputElement, link: linkInputElement });
+  const createNewElement = new Card({ name: nameInputElement, link: linkInputElement }, cardTemplate);
 
-  elements.prepend(createNewElement);
+  createNewElement.render(cardContainer);
 
-  cleanInput ();
+  cleanInput();
 
   closePopup(popupElementAdd);
 }
@@ -160,7 +136,7 @@ addButton.addEventListener('click', () => {
   openPopup(popupElementAdd);
   saveButtonForAdd.disabled = true;
   saveButtonForAdd.classList.add('popup__save-button_disabled');
-  cleanInput ();
+  cleanInput();
 
 });
 
