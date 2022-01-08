@@ -34,7 +34,6 @@ export class FormValidator {
 
   _toggleButtonState(buttonElement) {
     const isFormValid = this._formElement.checkValidity();
-    // debugger;
       buttonElement.classList.toggle(this._inactiveButtonClass, !isFormValid);
       buttonElement.disabled = !isFormValid;
   };
@@ -58,12 +57,14 @@ export class FormValidator {
     })
   };
 
-  // clearError(inputElement) {
-  //   // const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
-  //   inputElement.classList.remove(this._inputErrorClass);
-  //   errorElement.classList.remove(this._errorClass);
-  //   errorElement.textContent = '';
-  //   debugger;
-  // };
+  clearError() {
+    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    inputList.forEach((inputElement) => {
+      const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+      inputElement.classList.remove(this._inputErrorClass);
+      errorElement.classList.remove(this._errorClass);
+      errorElement.textContent = '';
+    });
+  };
 
 }
