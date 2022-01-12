@@ -25,26 +25,37 @@ const initialCards = [
   }
 ];
 
-import { Card } from './card.js';
+import { Card } from './Card.js';
 
 const cardTemplate = document.querySelector('.template').content;
 const cardContainer = document.querySelector('.elements');
 
-initialCards.forEach((item) => {
-  const newItem = new Card(item, cardTemplate);
-  newItem.render(cardContainer);
+function createCard(item) {
+  const card = new Card(item, cardTemplate);
+  const cardElement = card.render();
+  return cardElement;
+};
+
+initialCards.forEach((items) => {
+  const newElements = createCard(items);
+  cardContainer.prepend(newElements);
 });
 
-import { FormValidator } from './validate.js';
+import { validateData } from './validateData.js';
+import { FormValidator } from './Validate.js';
 
+console.log(validateData)
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
 const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
+// console.log(formElementAdd)
+// console.log(formElementEdit)
 
-const addFormValidator = new FormValidator(formElementAdd);
+const addFormValidator = new FormValidator(validateData, formElementAdd);
+// console.log(addFormValidator)
 addFormValidator.enableValidation();
 
-const editFormValidator = new FormValidator(formElementEdit);
+const editFormValidator = new FormValidator(validateData, formElementEdit);
 editFormValidator.enableValidation();
 
 // Находим поля формы в formElement
@@ -88,8 +99,8 @@ function closePopupByEsc(evt) {
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupByEsc);
-  const inputClearError = new FormValidator(popupElement);
-  inputClearError.clearError();
+  // const inputClearError = new FormValidator(popupElement);
+  // inputClearError.clearError();
 }
 
 function closePopup(popupElement) {
@@ -117,9 +128,9 @@ const handleFormAddSubmit = (evt) => {
   const nameInputElement = infoInputAdd.value;
   const linkInputElement = descriptionInputAdd.value;
 
-  const createNewElement = new Card({ name: nameInputElement, link: linkInputElement }, cardTemplate);
+  const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
 
-  createNewElement.render(cardContainer);
+  cardContainer.prepend(createNewElement);
 
   cleanInput();
 
