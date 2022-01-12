@@ -1,5 +1,5 @@
 const validateData = {
-// formSelector: '.popup__input-form',
+formSelector: '.popup__input-form',
 inputSelector: '.popup__input-text',
 submitBtnSelector: '.popup__save-button',
 inactiveButtonClass:'popup__save-button_disabled',

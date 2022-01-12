@@ -1,6 +1,6 @@
 export class FormValidator {
   constructor(validateData, formElement) {
-    // this._formSelector = validateData.formSelector;
+    this._formSelector = validateData.formSelector;
     this._inputSelector = validateData.inputSelector;
     this._submitBtnSelector = validateData.submitBtnSelector;
     this._inactiveButtonClass = validateData.inactiveButtonClass;
@@ -52,21 +52,23 @@ export class FormValidator {
 
   enableValidation() {
     // console.log(validateData)
-      // console.log(formElement)
+      console.log(this._formElement)
       this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
       this._buttonElement = this._formElement.querySelector(this._submitBtnSelector);
       this._formElement.addEventListener('submit', evt => evt.preventDefault());
       this._setEventListeners();
+      console.log(this._inputList)
 
 
   };
 
-  // clearError() {
-  //   const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-  //   this._inputList.forEach((inputElement) => {
-  //     this._hideInputError(inputElement);
-  //   });
-  // };
+  clearError() {
+    this._toggleButtonState(this._buttonElement);
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+
+    });
+  };
 
 }
 

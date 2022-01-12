@@ -44,12 +44,35 @@ initialCards.forEach((items) => {
 import { validateData } from './validateData.js';
 import { FormValidator } from './Validate.js';
 
-console.log(validateData)
+// console.log(validateData)
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
 const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
 // console.log(formElementAdd)
 // console.log(formElementEdit)
+
+
+// // создать экземпляры валидаторов всех форм
+// const formValidators = {}
+
+// // Включение валидации
+// const enableValidation = (config) => {
+//   const formList = Array.from(document.querySelectorAll(config.formSelector))
+//   formList.forEach((formElement) => {
+//     const validator = new FormValidator(formElement, config)
+// // получаем данные из атрибута `name` у формы
+//     const formName = formElement.getAttribute('name')
+
+//    // вот тут в объект записываем под именем формы
+//     formValidators[formName] = validator;
+//    validator.enableValidation();
+//   });
+// };
+
+// enableValidation(validateData);
+
+// console.log(formValidators)
+
 
 const addFormValidator = new FormValidator(validateData, formElementAdd);
 // console.log(addFormValidator)
@@ -63,7 +86,7 @@ const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_nam
 const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
 const infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
 const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
-const saveButtonForAdd = formElementAdd.querySelector('.popup__save-button'); //Карточка
+// const saveButtonForAdd = formElementAdd.querySelector('.popup__save-button'); //Карточка
 // Находим поля профиля в DOM
 const infoProfile = document.querySelector('.profile__info');
 const descriptionProfile = document.querySelector('.profile__description');
@@ -138,15 +161,17 @@ const handleFormAddSubmit = (evt) => {
 }
 
 editButton.addEventListener('click', () => {
+  editFormValidator.clearError();
   openPopup(popupElementEdit);
   infoInputEdit.value = infoProfile.textContent; //Запись в форму значений из профиля
   descriptionInputEdit.value = descriptionProfile.textContent; //Запись в форму значений из профиля
 });
 
 addButton.addEventListener('click', () => {
+  addFormValidator.clearError();
   openPopup(popupElementAdd);
-  saveButtonForAdd.disabled = true;
-  saveButtonForAdd.classList.add('popup__save-button_disabled');
+  // saveButtonForAdd.disabled = true;
+  // saveButtonForAdd.classList.add('popup__save-button_disabled');
   cleanInput();
 
 });
