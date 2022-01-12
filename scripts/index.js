@@ -43,6 +43,8 @@ initialCards.forEach((items) => {
 
 import { validateData } from './validateData.js';
 import { FormValidator } from './Validate.js';
+import { openPopup, closePopup } from './popup.js';
+
 
 // console.log(validateData)
 // Находим форму в DOM
@@ -99,37 +101,37 @@ const editButton = document.querySelector('.button_type_edit'); //Профиль
 
 const addButton = document.querySelector('.button_type_add'); //Карточка
 
-const popupList = document.querySelectorAll('.popup');
+// const popupList = document.querySelectorAll('.popup');
 
-popupList.forEach((popupElement) => {
-  popupElement.addEventListener("click", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup(popupElement)
-    }
-    if (evt.target.classList.contains('popup__close-button')) {
-      closePopup(popupElement)
-    }
-  })
-});
+// popupList.forEach((popupElement) => {
+//   popupElement.addEventListener("click", (evt) => {
+//     if (evt.target.classList.contains("popup_opened")) {
+//       closePopup(popupElement)
+//     }
+//     if (evt.target.classList.contains('popup__close-button')) {
+//       closePopup(popupElement)
+//     }
+//   })
+// });
 
-function closePopupByEsc(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup)
-  }
-}
+// function closePopupByEsc(evt) {
+//   if (evt.key === 'Escape') {
+//     const openedPopup = document.querySelector('.popup_opened');
+//     closePopup(openedPopup)
+//   }
+// }
 
-function openPopup(popupElement) {
-  popupElement.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupByEsc);
-  // const inputClearError = new FormValidator(popupElement);
-  // inputClearError.clearError();
-}
+// function openPopup(popupElement) {
+//   popupElement.classList.add('popup_opened');
+//   document.addEventListener('keydown', closePopupByEsc);
+//   // const inputClearError = new FormValidator(popupElement);
+//   // inputClearError.clearError();
+// }
 
-function closePopup(popupElement) {
-  popupElement.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByEsc);
-}
+// function closePopup(popupElement) {
+//   popupElement.classList.remove('popup_opened');
+//   document.removeEventListener('keydown', closePopupByEsc);
+// }
 
  //Профиль
 function handleFormEditSubmit (evt) {

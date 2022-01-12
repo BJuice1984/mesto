@@ -23,6 +23,7 @@ export class Card {
 
   _openPopupImage = () => {
     handleCardClick(this._name, this._link, this._alt);
+    // popupElementImage.classList.add('popup_opened');
   };
 
   _setEventListeners () {
