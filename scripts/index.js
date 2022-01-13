@@ -42,45 +42,33 @@ initialCards.forEach((items) => {
 });
 
 import { validateData } from './validateData.js';
-import { FormValidator } from './Validate.js';
+import { FormValidator } from './FormValidator.js';
 import { openPopup, closePopup } from './popup.js';
 
-
-// console.log(validateData)
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
 const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
-// console.log(formElementAdd)
-// console.log(formElementEdit)
-
 
 // создать экземпляры валидаторов всех форм
-const formValidators = {} //очень круто, что все формы попадают в однин объект. Спасибо!
+const formValidators = {}
 
 // Включение валидации
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
-  // console.log(formList)
   formList.forEach((formElement) => {
-    // console.log(formElement.attributes)
-    // console.log(formElement)
     const validator = new FormValidator(config, formElement)
 // получаем данные из атрибута `name` у формы
     const formName = formElement.getAttribute('name')
 
-   // вот тут в объект записываем под именем формы
+//в объект записываем под именем формы
     formValidators[ formName ] = validator;
-    // console.log(formName)
    validator.enableValidation();
   });
 };
-
 enableValidation(validateData);
-// console.log(formValidators)
 
 // const addFormValidator = new FormValidator(validateData, formElementAdd);
 // addFormValidator.enableValidation();
-
 // const editFormValidator = new FormValidator(validateData, formElementEdit);
 // editFormValidator.enableValidation();
 
@@ -117,23 +105,18 @@ function cleanInput() {
  //Карточка
 const handleFormAddSubmit = (evt) => {
   evt.preventDefault();
-
   const nameInputElement = infoInputAdd.value;
   const linkInputElement = descriptionInputAdd.value;
-
   const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
-
   cardContainer.prepend(createNewElement);
-
   cleanInput();
-
   closePopup(popupElementAdd);
 }
 
 editButton.addEventListener('click', () => {
   // editFormValidator.clearError();
-  // formValidators[ formEdit.getAttribute('name') ].clearError()
-  formValidators.formEdit.clearError(); //я вот толко не понял конструкцию вызова в []. Сделал по другому, но [] тоже работает.
+  // formValidators[ formEdit.getAttribute('name') ].resetValidation()
+  formValidators.formEdit.resetValidation();
   openPopup(popupElementEdit);
   infoInputEdit.value = infoProfile.textContent;
   descriptionInputEdit.value = descriptionProfile.textContent;
@@ -141,8 +124,8 @@ editButton.addEventListener('click', () => {
 
 addButton.addEventListener('click', () => {
   // addFormValidator.clearError();
-    // formValidators[ formAdd.getAttribute('name') ].clearError()
-  formValidators.formAdd.clearError();
+    // formValidators[ formAdd.getAttribute('name') ].resetValidation()
+  formValidators.formAdd.resetValidation();
   openPopup(popupElementAdd);
   cleanInput();
 
