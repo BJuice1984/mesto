@@ -1,7 +1,7 @@
 const popupList = document.querySelectorAll('.popup');
 
 popupList.forEach((popupElement) => {
-  popupElement.addEventListener("click", (evt) => {
+  popupElement.addEventListener("mousedown", (evt) => {
     if (evt.target.classList.contains("popup_opened")) {
       closePopup(popupElement)
     }

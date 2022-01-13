@@ -54,33 +54,35 @@ const formElementAdd = document.querySelector('.popup__input-form_type_add'); //
 // console.log(formElementEdit)
 
 
-// // создать экземпляры валидаторов всех форм
-// const formValidators = {}
+// создать экземпляры валидаторов всех форм
+const formValidators = {} //очень круто, что все формы попадают в однин объект. Спасибо!
 
-// // Включение валидации
-// const enableValidation = (config) => {
-//   const formList = Array.from(document.querySelectorAll(config.formSelector))
-//   formList.forEach((formElement) => {
-//     const validator = new FormValidator(formElement, config)
-// // получаем данные из атрибута `name` у формы
-//     const formName = formElement.getAttribute('name')
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  // console.log(formList)
+  formList.forEach((formElement) => {
+    // console.log(formElement.attributes)
+    // console.log(formElement)
+    const validator = new FormValidator(config, formElement)
+// получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name')
 
-//    // вот тут в объект записываем под именем формы
-//     formValidators[formName] = validator;
-//    validator.enableValidation();
-//   });
-// };
+   // вот тут в объект записываем под именем формы
+    formValidators[ formName ] = validator;
+    // console.log(formName)
+   validator.enableValidation();
+  });
+};
 
-// enableValidation(validateData);
-
+enableValidation(validateData);
 // console.log(formValidators)
 
+// const addFormValidator = new FormValidator(validateData, formElementAdd);
+// addFormValidator.enableValidation();
 
-const addFormValidator = new FormValidator(validateData, formElementAdd);
-addFormValidator.enableValidation();
-
-const editFormValidator = new FormValidator(validateData, formElementEdit);
-editFormValidator.enableValidation();
+// const editFormValidator = new FormValidator(validateData, formElementEdit);
+// editFormValidator.enableValidation();
 
 // Находим поля формы в formElement
 const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
@@ -129,14 +131,18 @@ const handleFormAddSubmit = (evt) => {
 }
 
 editButton.addEventListener('click', () => {
-  editFormValidator.clearError();
+  // editFormValidator.clearError();
+  // formValidators[ formEdit.getAttribute('name') ].clearError()
+  formValidators.formEdit.clearError(); //я вот толко не понял конструкцию вызова в []. Сделал по другому, но [] тоже работает.
   openPopup(popupElementEdit);
-  infoInputEdit.value = infoProfile.textContent; //Запись в форму значений из профиля
-  descriptionInputEdit.value = descriptionProfile.textContent; //Запись в форму значений из профиля
+  infoInputEdit.value = infoProfile.textContent;
+  descriptionInputEdit.value = descriptionProfile.textContent;
 });
 
 addButton.addEventListener('click', () => {
-  addFormValidator.clearError();
+  // addFormValidator.clearError();
+    // formValidators[ formAdd.getAttribute('name') ].clearError()
+  formValidators.formAdd.clearError();
   openPopup(popupElementAdd);
   cleanInput();
 
