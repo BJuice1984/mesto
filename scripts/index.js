@@ -25,34 +25,70 @@ const initialCards = [
   }
 ];
 
-import { Card } from './card.js';
+import { Card } from './Card.js';
 
 const cardTemplate = document.querySelector('.template').content;
 const cardContainer = document.querySelector('.elements');
 
-initialCards.forEach((item) => {
-  const newItem = new Card(item, cardTemplate);
-  newItem.render(cardContainer);
+function createCard(item) {
+  const card = new Card(item, cardTemplate);
+  const cardElement = card.render();
+  return cardElement;
+};
+
+initialCards.forEach((items) => {
+  const newElements = createCard(items);
+  cardContainer.prepend(newElements);
 });
 
-import { FormValidator } from './validate.js';
+import { validateData } from './validateData.js';
+import { FormValidator } from './Validate.js';
+import { openPopup, closePopup } from './popup.js';
 
+
+// console.log(validateData)
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
 const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
+// console.log(formElementAdd)
+// console.log(formElementEdit)
 
-const addFormValidator = new FormValidator(formElementAdd);
-addFormValidator.enableValidation();
 
-const editFormValidator = new FormValidator(formElementEdit);
-editFormValidator.enableValidation();
+// создать экземпляры валидаторов всех форм
+const formValidators = {} //очень круто, что все формы попадают в однин объект. Спасибо!
+
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  // console.log(formList)
+  formList.forEach((formElement) => {
+    // console.log(formElement.attributes)
+    // console.log(formElement)
+    const validator = new FormValidator(config, formElement)
+// получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name')
+
+   // вот тут в объект записываем под именем формы
+    formValidators[ formName ] = validator;
+    // console.log(formName)
+   validator.enableValidation();
+  });
+};
+
+enableValidation(validateData);
+// console.log(formValidators)
+
+// const addFormValidator = new FormValidator(validateData, formElementAdd);
+// addFormValidator.enableValidation();
+
+// const editFormValidator = new FormValidator(validateData, formElementEdit);
+// editFormValidator.enableValidation();
 
 // Находим поля формы в formElement
 const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
 const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
 const infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
 const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
-const saveButtonForAdd = formElementAdd.querySelector('.popup__save-button'); //Карточка
 // Находим поля профиля в DOM
 const infoProfile = document.querySelector('.profile__info');
 const descriptionProfile = document.querySelector('.profile__description');
@@ -64,38 +100,6 @@ const popupElementAdd = document.querySelector('.popup_type_add'); //Карто�
 const editButton = document.querySelector('.button_type_edit'); //Профиль
 
 const addButton = document.querySelector('.button_type_add'); //Карточка
-
-const popupList = document.querySelectorAll('.popup');
-
-popupList.forEach((popupElement) => {
-  popupElement.addEventListener("click", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup(popupElement)
-    }
-    if (evt.target.classList.contains('popup__close-button')) {
-      closePopup(popupElement)
-    }
-  })
-});
-
-function closePopupByEsc(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup)
-  }
-}
-
-function openPopup(popupElement) {
-  popupElement.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupByEsc);
-  const inputClearError = new FormValidator(popupElement);
-  inputClearError.clearError();
-}
-
-function closePopup(popupElement) {
-  popupElement.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByEsc);
-}
 
  //Профиль
 function handleFormEditSubmit (evt) {
@@ -117,9 +121,9 @@ const handleFormAddSubmit = (evt) => {
   const nameInputElement = infoInputAdd.value;
   const linkInputElement = descriptionInputAdd.value;
 
-  const createNewElement = new Card({ name: nameInputElement, link: linkInputElement }, cardTemplate);
+  const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
 
-  createNewElement.render(cardContainer);
+  cardContainer.prepend(createNewElement);
 
   cleanInput();
 
@@ -127,15 +131,19 @@ const handleFormAddSubmit = (evt) => {
 }
 
 editButton.addEventListener('click', () => {
+  // editFormValidator.clearError();
+  // formValidators[ formEdit.getAttribute('name') ].clearError()
+  formValidators.formEdit.clearError(); //я вот толко не понял конструкцию вызова в []. Сделал по другому, но [] тоже работает.
   openPopup(popupElementEdit);
-  infoInputEdit.value = infoProfile.textContent; //Запись в форму значений из профиля
-  descriptionInputEdit.value = descriptionProfile.textContent; //Запись в форму значений из профиля
+  infoInputEdit.value = infoProfile.textContent;
+  descriptionInputEdit.value = descriptionProfile.textContent;
 });
 
 addButton.addEventListener('click', () => {
+  // addFormValidator.clearError();
+    // formValidators[ formAdd.getAttribute('name') ].clearError()
+  formValidators.formAdd.clearError();
   openPopup(popupElementAdd);
-  saveButtonForAdd.disabled = true;
-  saveButtonForAdd.classList.add('popup__save-button_disabled');
   cleanInput();
 
 });
