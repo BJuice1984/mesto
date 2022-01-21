@@ -43,7 +43,7 @@ initialCards.forEach((items) => {
 
 import { validateData } from './validateData.js';
 import { FormValidator } from './FormValidator.js';
-import { openPopup, closePopup } from './popup.js';
+import { openPopup, closePopup } from './Popup.js';
 
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль

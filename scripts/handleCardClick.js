@@ -1,4 +1,4 @@
-import { openPopup } from "./popup.js";
+import { openPopup } from "./Popup.js";
 
 const popupElementImage = document.querySelector('.popup_type_image');
 const curretPopupName = popupElementImage.querySelector('.popup__content_type_name');
