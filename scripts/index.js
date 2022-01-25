@@ -26,24 +26,39 @@ const initialCards = [
 ];
 
 import { Card } from './Card.js';
-
-const cardTemplate = document.querySelector('.template').content;
-const cardContainer = document.querySelector('.elements');
-
-function createCard(item) {
-  const card = new Card(item, cardTemplate);
-  const cardElement = card.render();
-  return cardElement;
-};
-
-initialCards.forEach((items) => {
-  const newElements = createCard(items);
-  cardContainer.prepend(newElements);
-});
-
 import { validateData } from './validateData.js';
 import { FormValidator } from './FormValidator.js';
 import { openPopup, closePopup } from './Popup.js';
+import Section from './Section.js';
+
+const cardTemplate = document.querySelector('.template').content;
+const cardContainer = '.elements';
+
+// function createCard(item) {
+//   const card = new Card(item, cardTemplate);
+//   const cardElement = card.render();
+//   return cardElement;
+// };
+
+const cardList = new Section({
+    items: initialCards,
+    renderer: (cardItem) => {
+      const card = new Card(cardItem, cardTemplate);
+      const cardElement = card.render();
+
+      cardList.addItem(cardElement);
+    },
+  },
+  cardContainer
+);
+
+cardList.addItems();
+
+// initialCards.forEach((items) => {
+//   const newElements = createCard(items);
+//   cardContainer.prepend(newElements);
+// });
+
 
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
@@ -107,8 +122,8 @@ const handleFormAddSubmit = (evt) => {
   evt.preventDefault();
   const nameInputElement = infoInputAdd.value;
   const linkInputElement = descriptionInputAdd.value;
-  const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
-  cardContainer.prepend(createNewElement);
+  // const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
+  // cardContainer.prepend(createNewElement);
   cleanInput();
   closePopup(popupElementAdd);
 }
