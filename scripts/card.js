@@ -1,4 +1,4 @@
-import { handleCardClick } from './handleCardClick.js';
+// import { handleCardClick } from './handleCardClick.js';
 
 export class Card {
   constructor(items, template) {

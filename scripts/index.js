@@ -28,31 +28,30 @@ const initialCards = [
 import { Card } from './Card.js';
 import { validateData } from './validateData.js';
 import { FormValidator } from './FormValidator.js';
-import { openPopup, closePopup } from './Popup.js';
-import Section from './Section.js';
+import { Popup } from './Popup.js';
+import { Section } from './Section.js';
 
 const cardTemplate = document.querySelector('.template').content;
 const cardContainer = '.elements';
-
-// function createCard(item) {
-//   const card = new Card(item, cardTemplate);
-//   const cardElement = card.render();
-//   return cardElement;
-// };
 
 const cardList = new Section({
     items: initialCards,
     renderer: (cardItem) => {
       const card = new Card(cardItem, cardTemplate);
       const cardElement = card.render();
-
       cardList.addItem(cardElement);
     },
   },
   cardContainer
 );
-
 cardList.addItems();
+
+function createCard(item) {
+  const card = new Card(item, cardTemplate);
+  const cardElement = card.render();
+  return cardElement;
+};
+
 
 // initialCards.forEach((items) => {
 //   const newElements = createCard(items);
@@ -96,9 +95,19 @@ const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_typ
 const infoProfile = document.querySelector('.profile__info');
 const descriptionProfile = document.querySelector('.profile__description');
 
-const popupElementEdit = document.querySelector('.popup_type_edit'); //Профиль
 
-const popupElementAdd = document.querySelector('.popup_type_add'); //Карточка
+
+
+
+// const popupElementEdit = document.querySelector('.popup_type_edit'); //Профиль
+
+// const popupElementAdd = document.querySelector('.popup_type_add'); //Карточка
+
+
+
+
+
+
 
 const editButton = document.querySelector('.button_type_edit'); //Профиль
 
@@ -122,8 +131,10 @@ const handleFormAddSubmit = (evt) => {
   evt.preventDefault();
   const nameInputElement = infoInputAdd.value;
   const linkInputElement = descriptionInputAdd.value;
-  // const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
-  // cardContainer.prepend(createNewElement);
+
+  const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
+  document.querySelector(cardContainer).prepend(createNewElement);
+
   cleanInput();
   closePopup(popupElementAdd);
 }
@@ -132,7 +143,17 @@ editButton.addEventListener('click', () => {
   // editFormValidator.clearError();
   // formValidators[ formEdit.getAttribute('name') ].resetValidation()
   formValidators.formEdit.resetValidation();
-  openPopup(popupElementEdit);
+console.log('edit')
+  const popupElementEdit = new Popup('.popup_type_edit');
+  popupElementEdit.openPopup();
+  popupElementEdit.addEventListener();
+
+
+
+  // openPopup(popupElementEdit);
+
+
+
   infoInputEdit.value = infoProfile.textContent;
   descriptionInputEdit.value = descriptionProfile.textContent;
 });
@@ -141,7 +162,16 @@ addButton.addEventListener('click', () => {
   // addFormValidator.clearError();
     // formValidators[ formAdd.getAttribute('name') ].resetValidation()
   formValidators.formAdd.resetValidation();
-  openPopup(popupElementAdd);
+  console.log('add')
+  const popupElementAdd = new Popup('.popup_type_add');
+  popupElementAdd.openPopup();
+  popupElementAdd.addEventListener();
+
+
+  // openPopup(popupElementAdd);
+
+
+
   cleanInput();
 
 });
