@@ -29,15 +29,29 @@ import { Card } from './Card.js';
 import { validateData } from './validateData.js';
 import { FormValidator } from './FormValidator.js';
 import { Popup } from './Popup.js';
+import { PopupWithImage } from './PopupWithImage.js';
 import { Section } from './Section.js';
 
 const cardTemplate = document.querySelector('.template').content;
 const cardContainer = '.elements';
 
+const handleCardClick = (name, link) => {
+  console.log(name, link)
+  // const data = {
+  //   name: evt.target.closest('.element').querySelector('.element__name'),
+  //   link: evt.targer.src
+  // };
+  popupElementImage.openPopup({name, link});
+    // curretPopupName.textContent = name;
+    // curretPopupImage.src = link;
+    // curretPopupImage.alt = alt;
+    // openPopup(popupElementImage);
+  }
+
 const cardList = new Section({
     items: initialCards,
     renderer: (cardItem) => {
-      const card = new Card(cardItem, cardTemplate);
+      const card = new Card(cardItem, cardTemplate, handleCardClick);
       const cardElement = card.render();
       cardList.addItem(cardElement);
     },
@@ -47,7 +61,7 @@ const cardList = new Section({
 cardList.addItems();
 
 function createCard(item) {
-  const card = new Card(item, cardTemplate);
+  const card = new Card(item, cardTemplate, handleCardClick);
   const cardElement = card.render();
   return cardElement;
 };
@@ -63,19 +77,15 @@ function createCard(item) {
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
 const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
 
-// создать экземпляры валидаторов всех форм
-const formValidators = {}
 
+const formValidators = {} // создать экземпляры валидаторов всех форм
 // Включение валидации
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
     const validator = new FormValidator(config, formElement)
-// получаем данные из атрибута `name` у формы
-    const formName = formElement.getAttribute('name')
-
-//в объект записываем под именем формы
-    formValidators[ formName ] = validator;
+    const formName = formElement.getAttribute('name') // получаем данные из атрибута `name` у формы
+    formValidators[ formName ] = validator; //в объект записываем под именем формы
    validator.enableValidation();
   });
 };
@@ -95,22 +105,7 @@ const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_typ
 const infoProfile = document.querySelector('.profile__info');
 const descriptionProfile = document.querySelector('.profile__description');
 
-
-
-
-
-// const popupElementEdit = document.querySelector('.popup_type_edit'); //Профиль
-
-// const popupElementAdd = document.querySelector('.popup_type_add'); //Карточка
-
-
-
-
-
-
-
 const editButton = document.querySelector('.button_type_edit'); //Профиль
-
 const addButton = document.querySelector('.button_type_add'); //Карточка
 
  //Профиль
@@ -118,7 +113,7 @@ function handleFormEditSubmit (evt) {
   evt.preventDefault();
   infoProfile.textContent = infoInputEdit.value; //Запись в Профиль введенных значений из формы
   descriptionProfile.textContent = descriptionInputEdit.value; //Запись в Профиль введенных значений из формы
-  closePopup(popupElementEdit);
+  popupElementEdit.closePopup();
 }
 
 function cleanInput() {
@@ -131,50 +126,40 @@ const handleFormAddSubmit = (evt) => {
   evt.preventDefault();
   const nameInputElement = infoInputAdd.value;
   const linkInputElement = descriptionInputAdd.value;
-
   const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
   document.querySelector(cardContainer).prepend(createNewElement);
-
   cleanInput();
-  closePopup(popupElementAdd);
+  popupElementAdd.closePopup();
 }
 
+const popupElementEdit = new Popup('.popup_type_edit');
+popupElementEdit.setEventListeners();
+
 editButton.addEventListener('click', () => {
-  // editFormValidator.clearError();
-  // formValidators[ formEdit.getAttribute('name') ].resetValidation()
   formValidators.formEdit.resetValidation();
-console.log('edit')
-  const popupElementEdit = new Popup('.popup_type_edit');
+
   popupElementEdit.openPopup();
-  popupElementEdit.addEventListener();
-
-
-
-  // openPopup(popupElementEdit);
-
-
 
   infoInputEdit.value = infoProfile.textContent;
   descriptionInputEdit.value = descriptionProfile.textContent;
 });
 
+const popupElementAdd = new Popup('.popup_type_add');
+popupElementAdd.setEventListeners();
+
 addButton.addEventListener('click', () => {
-  // addFormValidator.clearError();
-    // formValidators[ formAdd.getAttribute('name') ].resetValidation()
   formValidators.formAdd.resetValidation();
-  console.log('add')
-  const popupElementAdd = new Popup('.popup_type_add');
+
   popupElementAdd.openPopup();
-  popupElementAdd.addEventListener();
-
-
-  // openPopup(popupElementAdd);
-
-
 
   cleanInput();
 
 });
+
+
+
+const popupElementImage = new PopupWithImage('.popup_type_image');
+popupElementImage.setEventListeners()
 
 formElementEdit.addEventListener('submit', handleFormEditSubmit);
 

@@ -14,7 +14,7 @@ export class Popup {
     document.removeEventListener('keydown', this._closePopupByEsc);
   }
 
-  addEventListener() {
+  setEventListeners() {
     this._popup.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup_opened')) {
         this.closePopup();
