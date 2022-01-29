@@ -1,5 +1,6 @@
 export class Card {
   constructor(items, template, handleCardClick) {
+    // debugger;
     this._name = items.name;
     this._link = items.link;
     this._alt = items.name;

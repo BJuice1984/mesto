@@ -28,139 +28,149 @@ const initialCards = [
 import { Card } from './Card.js';
 import { validateData } from './validateData.js';
 import { FormValidator } from './FormValidator.js';
-import { Popup } from './Popup.js';
 import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithForm } from './PopupWithForm.js';
 import { Section } from './Section.js';
+import { UserInfo } from './UserInfo.js';
+
+// Находим форму в DOM
+const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
+// Находим поля формы в formElement
+const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
+const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
+
+const profileInfo = new UserInfo({ infoSelector: '.profile__info', descriptionSelector: '.profile__description' });
 
 const cardTemplate = document.querySelector('.template').content;
 const cardContainer = '.elements';
 
-const handleCardClick = (name, link) => {
-  console.log(name, link)
-  // const data = {
-  //   name: evt.target.closest('.element').querySelector('.element__name'),
-  //   link: evt.targer.src
-  // };
-  popupElementImage.openPopup({name, link});
-    // curretPopupName.textContent = name;
-    // curretPopupImage.src = link;
-    // curretPopupImage.alt = alt;
-    // openPopup(popupElementImage);
-  }
+const handleCardClick = (name, link) => {popupElementImage.openPopup({name, link})};
 
-const cardList = new Section({
-    items: initialCards,
-    renderer: (cardItem) => {
-      const card = new Card(cardItem, cardTemplate, handleCardClick);
+const popupElementImage = new PopupWithImage('.popup_type_image');
+popupElementImage.setEventListeners();
+
+//Профиль
+const popupElementEdit = new PopupWithForm('.popup_type_edit',
+{ handleFormSubmit: ({ info, description }) => {
+  profileInfo.setUserInfo({ info, description })
+}
+});
+popupElementEdit.setEventListeners();
+
+//Карточка
+const popupElementAdd = new PopupWithForm('.popup_type_add', {
+  handleFormSubmit: (data) => {
+    // console.log(data)
+    // const addPopupInput = {
+      //   name: data.name,
+      //   link: data.link
+      // }
+      // console.log(addPopupInput)
+      const card = new Card(data, cardTemplate, handleCardClick);
       const cardElement = card.render();
       cardList.addItem(cardElement);
-    },
+    }
+  });
+popupElementAdd.setEventListeners();
+
+const cardList = new Section({
+  items: initialCards,
+  renderer: (cardItem) => {
+    const card = new Card(cardItem, cardTemplate, handleCardClick);
+    const cardElement = card.render();
+    cardList.addItem(cardElement);
   },
-  cardContainer
+},
+cardContainer
 );
 cardList.addItems();
 
-function createCard(item) {
-  const card = new Card(item, cardTemplate, handleCardClick);
-  const cardElement = card.render();
-  return cardElement;
-};
-
-
-// initialCards.forEach((items) => {
-//   const newElements = createCard(items);
-//   cardContainer.prepend(newElements);
-// });
-
-
-// Находим форму в DOM
-const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
-const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
-
-
 const formValidators = {} // создать экземпляры валидаторов всех форм
-// Включение валидации
+  // Включение валидации
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
     const validator = new FormValidator(config, formElement)
     const formName = formElement.getAttribute('name') // получаем данные из атрибута `name` у формы
     formValidators[ formName ] = validator; //в объект записываем под именем формы
-   validator.enableValidation();
+    validator.enableValidation();
   });
 };
 enableValidation(validateData);
 
-// const addFormValidator = new FormValidator(validateData, formElementAdd);
-// addFormValidator.enableValidation();
-// const editFormValidator = new FormValidator(validateData, formElementEdit);
-// editFormValidator.enableValidation();
-
-// Находим поля формы в formElement
-const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
-const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
-const infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
-const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
-// Находим поля профиля в DOM
-const infoProfile = document.querySelector('.profile__info');
-const descriptionProfile = document.querySelector('.profile__description');
-
 const editButton = document.querySelector('.button_type_edit'); //Профиль
 const addButton = document.querySelector('.button_type_add'); //Карточка
 
- //Профиль
-function handleFormEditSubmit (evt) {
-  evt.preventDefault();
-  infoProfile.textContent = infoInputEdit.value; //Запись в Профиль введенных значений из формы
-  descriptionProfile.textContent = descriptionInputEdit.value; //Запись в Профиль введенных значений из формы
-  popupElementEdit.closePopup();
-}
-
-function cleanInput() {
-  infoInputAdd.value = '';
-  descriptionInputAdd.value = '';
-};
-
- //Карточка
-const handleFormAddSubmit = (evt) => {
-  evt.preventDefault();
-  const nameInputElement = infoInputAdd.value;
-  const linkInputElement = descriptionInputAdd.value;
-  const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
-  document.querySelector(cardContainer).prepend(createNewElement);
-  cleanInput();
-  popupElementAdd.closePopup();
-}
-
-const popupElementEdit = new Popup('.popup_type_edit');
-popupElementEdit.setEventListeners();
-
 editButton.addEventListener('click', () => {
-  formValidators.formEdit.resetValidation();
-
   popupElementEdit.openPopup();
-
-  infoInputEdit.value = infoProfile.textContent;
-  descriptionInputEdit.value = descriptionProfile.textContent;
+  const getUserInfo = profileInfo.getUserInfo()
+  infoInputEdit.value = getUserInfo.info;
+  descriptionInputEdit.value = getUserInfo.description;
+  formValidators.formEdit.resetValidation();
 });
-
-const popupElementAdd = new Popup('.popup_type_add');
-popupElementAdd.setEventListeners();
 
 addButton.addEventListener('click', () => {
   formValidators.formAdd.resetValidation();
-
   popupElementAdd.openPopup();
-
-  cleanInput();
-
 });
 
 
 
-const popupElementImage = new PopupWithImage('.popup_type_image');
-popupElementImage.setEventListeners()
 
-formElementEdit.addEventListener('submit', handleFormEditSubmit);
+// const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
 
-formElementAdd.addEventListener('submit', handleFormAddSubmit);
+
+// const infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
+// const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
+// Находим поля профиля в DOM
+
+
+
+//Профиль
+// function handleFormEditSubmit (evt) {
+  //   evt.preventDefault();
+  //   infoProfile.textContent = infoInputEdit.value; //Запись в Профиль введенных значений из формы
+  //   descriptionProfile.textContent = descriptionInputEdit.value; //Запись в Профиль введенных значений из формы
+  //   popupElementEdit.closePopup();
+  // }
+
+  // function cleanInput() {
+    //   infoInputAdd.value = '';
+    //   descriptionInputAdd.value = '';
+    // };
+
+    //Карточка
+    // const handleFormAddSubmit = (evt) => {
+      //   evt.preventDefault();
+      //   const nameInputElement = infoInputAdd.value;
+      //   const linkInputElement = descriptionInputAdd.value;
+      //   const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
+      //   document.querySelector(cardContainer).prepend(createNewElement);
+      //   cleanInput();
+      //   popupElementAdd.closePopup();
+      // }
+
+
+
+
+
+      // const infoProfile = document.querySelector('.profile__info');
+      // const descriptionProfile = document.querySelector('.profile__description');
+
+
+
+
+      // formElementEdit.addEventListener('submit', handleFormEditSubmit);
+
+      // formElementAdd.addEventListener('submit', handleFormAddSubmit);
+
+
+      // initialCards.forEach((items) => {
+        //   const newElements = createCard(items);
+        //   cardContainer.prepend(newElements);
+        // });
+
+        // const addFormValidator = new FormValidator(validateData, formElementAdd);
+        // addFormValidator.enableValidation();
+        // const editFormValidator = new FormValidator(validateData, formElementEdit);
+        // editFormValidator.enableValidation();
