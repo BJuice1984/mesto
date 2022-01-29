@@ -39,7 +39,10 @@ const formElementEdit = document.querySelector('.popup__input-form_type_edit'); 
 const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
 const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
 
-const profileInfo = new UserInfo({ infoSelector: '.profile__info', descriptionSelector: '.profile__description' });
+const profileInfo = new UserInfo({
+  infoSelector: '.profile__info',
+  descriptionSelector: '.profile__description'
+});
 
 const cardTemplate = document.querySelector('.template').content;
 const cardContainer = '.elements';
