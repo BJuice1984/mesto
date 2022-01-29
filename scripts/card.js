@@ -1,11 +1,11 @@
-import { handleCardClick } from './handleCardClick.js';
-
 export class Card {
-  constructor(items, template) {
+  constructor(items, template, handleCardClick) {
+    // debugger;
     this._name = items.name;
     this._link = items.link;
     this._alt = items.name;
     this._template = template;
+    this._handleCardClick = handleCardClick;
   }
 
   _createView() {
@@ -21,18 +21,10 @@ export class Card {
     evt.target.classList.toggle('button_type_heart-like-active');
   };
 
-  _openPopupImage = () => {
-    handleCardClick(this._name, this._link, this._alt);
-  };
-
   _setEventListeners () {
-    this._view.querySelector('.button_type_heart-like').addEventListener('click', (evt) => {
-      this._likeButton(evt)
-    });
-
+    this._view.querySelector('.button_type_heart-like').addEventListener('click', (evt) => {this._likeButton(evt)});
     this._view.querySelector('.button_type_delete').addEventListener('click', this._deleteButton);
-
-    this._cardImage.addEventListener('click', this._openPopupImage);
+    this._cardImage.addEventListener('click', () => {this._handleCardClick(this._name, this._link)});
   };
 
   render() {
