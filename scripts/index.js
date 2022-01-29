@@ -1,3 +1,5 @@
+
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -32,6 +34,7 @@ import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
 import { Section } from './Section.js';
 import { UserInfo } from './UserInfo.js';
+import '../pages/index.css';
 
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
@@ -63,12 +66,6 @@ popupElementEdit.setEventListeners();
 //Карточка
 const popupElementAdd = new PopupWithForm('.popup_type_add', {
   handleFormSubmit: (data) => {
-    // console.log(data)
-    // const addPopupInput = {
-      //   name: data.name,
-      //   link: data.link
-      // }
-      // console.log(addPopupInput)
       const card = new Card(data, cardTemplate, handleCardClick);
       const cardElement = card.render();
       cardList.addItem(cardElement);
@@ -116,64 +113,3 @@ addButton.addEventListener('click', () => {
   formValidators.formAdd.resetValidation();
   popupElementAdd.openPopup();
 });
-
-
-
-
-// const formElementAdd = document.querySelector('.popup__input-form_type_add'); //Карточка
-
-
-// const infoInputAdd = formElementAdd.querySelector('.popup__input-text_type_name'); //Карточка
-// const descriptionInputAdd = formElementAdd.querySelector('.popup__input-text_type_link'); //Карточка
-// Находим поля профиля в DOM
-
-
-
-//Профиль
-// function handleFormEditSubmit (evt) {
-  //   evt.preventDefault();
-  //   infoProfile.textContent = infoInputEdit.value; //Запись в Профиль введенных значений из формы
-  //   descriptionProfile.textContent = descriptionInputEdit.value; //Запись в Профиль введенных значений из формы
-  //   popupElementEdit.closePopup();
-  // }
-
-  // function cleanInput() {
-    //   infoInputAdd.value = '';
-    //   descriptionInputAdd.value = '';
-    // };
-
-    //Карточка
-    // const handleFormAddSubmit = (evt) => {
-      //   evt.preventDefault();
-      //   const nameInputElement = infoInputAdd.value;
-      //   const linkInputElement = descriptionInputAdd.value;
-      //   const createNewElement = createCard({ name: nameInputElement, link: linkInputElement });
-      //   document.querySelector(cardContainer).prepend(createNewElement);
-      //   cleanInput();
-      //   popupElementAdd.closePopup();
-      // }
-
-
-
-
-
-      // const infoProfile = document.querySelector('.profile__info');
-      // const descriptionProfile = document.querySelector('.profile__description');
-
-
-
-
-      // formElementEdit.addEventListener('submit', handleFormEditSubmit);
-
-      // formElementAdd.addEventListener('submit', handleFormAddSubmit);
-
-
-      // initialCards.forEach((items) => {
-        //   const newElements = createCard(items);
-        //   cardContainer.prepend(newElements);
-        // });
-
-        // const addFormValidator = new FormValidator(validateData, formElementAdd);
-        // addFormValidator.enableValidation();
-        // const editFormValidator = new FormValidator(validateData, formElementEdit);
-        // editFormValidator.enableValidation();
