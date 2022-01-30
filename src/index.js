@@ -32,7 +32,7 @@ import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
 import { Section } from './Section.js';
 import { UserInfo } from './UserInfo.js';
-import '../pages/index.css';
+import './index.css';
 
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
