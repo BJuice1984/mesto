@@ -1,38 +1,11 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-import { Card } from './Card.js';
-import { validateData } from './validateData.js';
-import { FormValidator } from './FormValidator.js';
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
-import { Section } from './Section.js';
-import { UserInfo } from './UserInfo.js';
-import './index.css';
+import { Card } from '../components/Card.js';
+import { validateData, initialCards } from '../utils/constants.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { Section } from '../components/Section.js';
+import { UserInfo } from '../components/UserInfo.js';
+import '../pages/index.css';
 
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
@@ -61,12 +34,16 @@ const popupElementEdit = new PopupWithForm('.popup_type_edit',
 });
 popupElementEdit.setEventListeners();
 
+function createCard(item) {
+  const card = new Card(item, cardTemplate, handleCardClick);
+  const cardElement = card.render();
+  return cardElement
+}
+
 //Карточка
 const popupElementAdd = new PopupWithForm('.popup_type_add', {
-  handleFormSubmit: (data) => {
-      const card = new Card(data, cardTemplate, handleCardClick);
-      const cardElement = card.render();
-      cardList.addItem(cardElement);
+  handleFormSubmit: (cardItem) => {
+      cardList.addItem(createCard(cardItem));
     }
   });
 popupElementAdd.setEventListeners();
@@ -74,9 +51,7 @@ popupElementAdd.setEventListeners();
 const cardList = new Section({
   items: initialCards,
   renderer: (cardItem) => {
-    const card = new Card(cardItem, cardTemplate, handleCardClick);
-    const cardElement = card.render();
-    cardList.addItem(cardElement);
+    cardList.addItem(createCard(cardItem));
   },
 },
 cardContainer
