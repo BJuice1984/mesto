@@ -4,20 +4,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
-    <meta name="description" content="Практическая работа №4 Ильяса Сибгатуллина на Яндекс.Практикуме»" />
+    <meta name="description" content="Практическая работа №4-8 Ильяса Сибгатуллина на Яндекс.Практикуме»" />
     <meta name="keywords" content="HTML5, CSS" />
     <meta name="author" content="Ильяс" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <title>Проект: Место</title>
   </head>
   <body class="page">
     <div class="page__container">
       <header class="header">
-        <img class="header__logo" src="./images/Logo.svg" alt="Картинка логотип проекта" />
+        <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Картинка логотип проекта" />
       </header>
       <main class="content">
         <section class="profile">
-          <img class="profile__avatar" src="./images/Кусто.jpg" alt="Фотография профиля" />
+          <img class="profile__avatar" src="<%=require('./images/Кусто.jpg')%>" alt="Фотография профиля" />
           <h1 class="profile__info">Жак-Ив Кусто</h1>
           <button class="button button_type_edit" type="button" aria-label="Редактировать"></button>
           <p class="profile__description">Исследователь океана</p>
@@ -116,6 +115,5 @@
         <button class="button button_type_delete" type="button" aria-label="Удалить"></button>
       </article>
     </template>
-    <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>
