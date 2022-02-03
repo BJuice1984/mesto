@@ -1,11 +1,20 @@
 import { Card } from '../components/Card.js';
-import { validateData, initialCards } from '../utils/constants.js';
+import { validateData } from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
+import { Api } from '../components/Api.js';
 import '../pages/index.css';
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34',
+  headers: {
+    authorization: '8ea9cb00-852a-4345-ada2-88b25612cbe6',
+    'Content-Type': 'application/json'
+  }
+});
 
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
@@ -34,6 +43,15 @@ const popupElementEdit = new PopupWithForm('.popup_type_edit',
 });
 popupElementEdit.setEventListeners();
 
+//Аватар
+const popupElementAvatar = new PopupWithForm('.popup_type_avatar',
+{ handleFormSubmit: (values) => {
+  const { link } = values;
+  console.log(link)
+}
+});
+popupElementAvatar.setEventListeners();
+
 function createCard(item) {
   const card = new Card(item, cardTemplate, handleCardClick);
   const cardElement = card.render();
@@ -48,15 +66,20 @@ const popupElementAdd = new PopupWithForm('.popup_type_add', {
   });
 popupElementAdd.setEventListeners();
 
-const cardList = new Section({
-  items: initialCards,
-  renderer: (cardItem) => {
-    cardList.addItem(createCard(cardItem));
-  },
-},
-cardContainer
-);
-cardList.addItems();
+//Загрузка массива карточек с сервера
+api.getInitialCards()
+  .then(initialCards => {
+    const cardList = new Section({
+      items: initialCards,
+      renderer: (cardItem) => {
+        cardList.addItem(createCard(cardItem));
+        },
+      },
+      cardContainer
+      );
+    cardList.addItems();
+  })
+  .catch(err => console.log(err));
 
 const formValidators = {} // создать экземпляры валидаторов всех форм
   // Включение валидации
@@ -73,6 +96,7 @@ enableValidation(validateData);
 
 const editButton = document.querySelector('.button_type_edit'); //Профиль
 const addButton = document.querySelector('.button_type_add'); //Карточка
+const avatarButton = document.querySelector('.profile__avatar'); //Аватар
 
 editButton.addEventListener('click', () => {
   popupElementEdit.openPopup();
@@ -85,4 +109,9 @@ editButton.addEventListener('click', () => {
 addButton.addEventListener('click', () => {
   formValidators.formAdd.resetValidation();
   popupElementAdd.openPopup();
+});
+
+avatarButton.addEventListener('click', () => {
+  formValidators.formAvatar.resetValidation();
+  popupElementAvatar.openPopup();
 });

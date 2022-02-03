@@ -7,7 +7,24 @@
   object-fit: cover;
   margin: 0;
   margin-bottom: 25px;
+  cursor: pointer;
 }
+.profile__avatar:before {
+  content: '';
+  background-image: url(../../../images/pencil.svg);
+  display: block;
+  position: relative;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+}
+
+.profile__avatar:hover {
+  opacity: 0.6;
+  transition: 0.2s ease-in-out;
+}
+
 
 @media screen and (min-width: 768px) {
   .profile__avatar {
