@@ -16,6 +16,11 @@ const api = new Api({
   }
 });
 
+api.getInitialUser()
+  .then((res) => {
+    console.log(res.name, res.about)
+    profileInfo.setUserInfo(res.name, res.about)})
+  .catch(err => console.log(err));
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
 // Находим поля формы в formElement

@@ -18,5 +18,12 @@ export class Api {
     .then(res => this._checkResponse(res));
   }
 
+  getInitialUser() {
+    return fetch('https://nomoreparties.co/v1/cohort-34/users/me', {
+      headers: this._headers
+    })
+    .then(res => this._checkResponse(res))
+  }
+
 
 }

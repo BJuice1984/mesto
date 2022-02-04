@@ -7,4 +7,3 @@ inputErrorClass: 'popup__input-text_type_error',
 errorClass: 'popup__input-form-error_active',
 closeButtonSelector: '.popup__close-button'
 }
-
