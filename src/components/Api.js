@@ -25,5 +25,23 @@ export class Api {
     .then(res => this._checkResponse(res))
   }
 
+  getChangeAvatar(link) {
+    return fetch('https://nomoreparties.co/v1/cohort-34/users/me/avatar', {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(link)
+    })
+    .then(res => this._checkResponse(res))
+  }
+
+  getChangeUserInfo(data) {
+    return fetch('https://nomoreparties.co/v1/cohort-34/users/me', {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+    .then(res => this._checkResponse(res))
+  }
+
 
 }

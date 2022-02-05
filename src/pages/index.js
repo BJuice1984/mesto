@@ -16,21 +16,24 @@ const api = new Api({
   }
 });
 
+const profileInfo = new UserInfo({
+  infoSelector: '.profile__info',
+  descriptionSelector: '.profile__description',
+  avatarSelector: '.profile__avatar'
+});
+
 api.getInitialUser()
   .then((res) => {
-    console.log(res.name, res.about)
-    profileInfo.setUserInfo(res.name, res.about)})
+    profileInfo.setUserInfo({ name: res.name, about: res.about });
+    profileInfo.setUserAvatar({ avatar: res.avatar })
+  })
   .catch(err => console.log(err));
+
 // Находим форму в DOM
 const formElementEdit = document.querySelector('.popup__input-form_type_edit'); //Профиль
 // Находим поля формы в formElement
 const infoInputEdit = formElementEdit.querySelector('.popup__input-text_type_name'); //Профиль
 const descriptionInputEdit = formElementEdit.querySelector('.popup__input-text_type_description'); //Профиль
-
-const profileInfo = new UserInfo({
-  infoSelector: '.profile__info',
-  descriptionSelector: '.profile__description'
-});
 
 const cardTemplate = document.querySelector('.template').content;
 const cardContainer = '.elements';
@@ -42,8 +45,13 @@ popupElementImage.setEventListeners();
 
 //Профиль
 const popupElementEdit = new PopupWithForm('.popup_type_edit',
-{ handleFormSubmit: ({ info, description }) => {
-  profileInfo.setUserInfo({ info, description })
+{ handleFormSubmit: ({ name, about }) => {
+  api.getChangeUserInfo({ name, about })
+  .then((res) => {
+  // console.log({ name: res.name, about: res.about })
+  profileInfo.setUserInfo({ name: res.name, about: res.about })
+  })
+  .catch(err => console.log(err));
 }
 });
 popupElementEdit.setEventListeners();
@@ -51,8 +59,11 @@ popupElementEdit.setEventListeners();
 //Аватар
 const popupElementAvatar = new PopupWithForm('.popup_type_avatar',
 { handleFormSubmit: (values) => {
-  const { link } = values;
-  console.log(link)
+  api.getChangeAvatar(values)
+    .then((res) => {
+      profileInfo.setUserAvatar({ avatar: res.avatar })
+    })
+    .catch(err => console.log(err));
 }
 });
 popupElementAvatar.setEventListeners();
@@ -71,20 +82,43 @@ const popupElementAdd = new PopupWithForm('.popup_type_add', {
   });
 popupElementAdd.setEventListeners();
 
+// let userId = null;
+// api.getAppInfo()
+//   .then(([ cardsArray, userData ]) => {
+//     userId = userData._id;
+//   })
+// function createCard(data) {
+//   // userId будет доступна здесь. Запрашивать его каждый раз при вызове createCard не нужно.
+// }
+
+// let initialCards = null;
+// api.getInitialCards()
+//   .then(res => { initialCards = res; console.log(initialCards) })
+//   .catch(err => console.log(err));
+
+
+
+
 //Загрузка массива карточек с сервера
+
+
 api.getInitialCards()
   .then(initialCards => {
-    const cardList = new Section({
-      items: initialCards,
-      renderer: (cardItem) => {
-        cardList.addItem(createCard(cardItem));
-        },
-      },
-      cardContainer
-      );
-    cardList.addItems();
-  })
-  .catch(err => console.log(err));
+
+
+const cardList = new Section({
+  items: initialCards,
+  renderer: (cardItem) => {
+
+    cardList.addItem(createCard(cardItem));
+    },
+  },
+  cardContainer
+  );
+cardList.addItems();})
+.catch(err => console.log(err));
+
+
 
 const formValidators = {} // создать экземпляры валидаторов всех форм
   // Включение валидации
