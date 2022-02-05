@@ -43,5 +43,14 @@ export class Api {
     .then(res => this._checkResponse(res))
   }
 
+  getNewCard(data) {
+    return fetch('https://nomoreparties.co/v1/cohort-34/cards', {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+    .then(res => this._checkResponse(res))
+  }
+
 
 }

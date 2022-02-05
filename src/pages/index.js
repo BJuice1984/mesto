@@ -15,17 +15,20 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
-
 const profileInfo = new UserInfo({
   infoSelector: '.profile__info',
   descriptionSelector: '.profile__description',
   avatarSelector: '.profile__avatar'
 });
 
+let userId = null;
+
 api.getInitialUser()
   .then((res) => {
+    // console.log(res)
     profileInfo.setUserInfo({ name: res.name, about: res.about });
-    profileInfo.setUserAvatar({ avatar: res.avatar })
+    profileInfo.setUserAvatar({ avatar: res.avatar });
+    userId = res._id;
   })
   .catch(err => console.log(err));
 
@@ -57,17 +60,18 @@ const popupElementEdit = new PopupWithForm('.popup_type_edit',
 popupElementEdit.setEventListeners();
 
 //Аватар
-const popupElementAvatar = new PopupWithForm('.popup_type_avatar',
-{ handleFormSubmit: (values) => {
-  api.getChangeAvatar(values)
-    .then((res) => {
-      profileInfo.setUserAvatar({ avatar: res.avatar })
-    })
-    .catch(err => console.log(err));
-}
+const popupElementAvatar = new PopupWithForm('.popup_type_avatar', {
+  handleFormSubmit: (values) => {
+    api.getChangeAvatar(values)
+      .then((res) => {
+        profileInfo.setUserAvatar({ avatar: res.avatar })
+      })
+      .catch(err => console.log(err));
+    }
 });
 popupElementAvatar.setEventListeners();
 
+//Функция создания карточки
 function createCard(item) {
   const card = new Card(item, cardTemplate, handleCardClick);
   const cardElement = card.render();
@@ -77,44 +81,30 @@ function createCard(item) {
 //Карточка
 const popupElementAdd = new PopupWithForm('.popup_type_add', {
   handleFormSubmit: (cardItem) => {
-      cardList.addItem(createCard(cardItem));
-    }
-  });
+    // console.log(cardItem)
+    api.getNewCard(cardItem)
+      .then((res) => {
+    const newCardItem = createCard({ name: res.name, link: res.link, likes: res.likes, _id: res._id, owner: userId })
+      document.querySelector(cardContainer).prepend(newCardItem)
+      })
+  }
+});
+
 popupElementAdd.setEventListeners();
-
-// let userId = null;
-// api.getAppInfo()
-//   .then(([ cardsArray, userData ]) => {
-//     userId = userData._id;
-//   })
-// function createCard(data) {
-//   // userId будет доступна здесь. Запрашивать его каждый раз при вызове createCard не нужно.
-// }
-
-// let initialCards = null;
-// api.getInitialCards()
-//   .then(res => { initialCards = res; console.log(initialCards) })
-//   .catch(err => console.log(err));
-
-
 
 
 //Загрузка массива карточек с сервера
-
-
 api.getInitialCards()
   .then(initialCards => {
+    // console.log(initialCards);
+    const cardList = new Section({
+      items: initialCards,
+      renderer: (cardItem) => {
 
-
-const cardList = new Section({
-  items: initialCards,
-  renderer: (cardItem) => {
-
-    cardList.addItem(createCard(cardItem));
-    },
-  },
-  cardContainer
-  );
+        cardList.addItem(createCard(cardItem));
+        },
+      }, cardContainer
+    );
 cardList.addItems();})
 .catch(err => console.log(err));
 
@@ -154,3 +144,38 @@ avatarButton.addEventListener('click', () => {
   formValidators.formAvatar.resetValidation();
   popupElementAvatar.openPopup();
 });
+
+
+// let userId = null;
+// api.getAppInfo()
+//   .then(([ cardsArray, userData ]) => {
+//     userId = userData._id;
+//   })
+// function createCard(data) {
+//   // userId будет доступна здесь. Запрашивать его каждый раз при вызове createCard не нужно.
+// }
+
+// let initialCards = null;
+// api.getInitialCards()
+//   .then(res => { initialCards = res; console.log(initialCards) })
+//   .catch(err => console.log(err));
+
+
+// const popupElementAdd = new PopupWithForm('.popup_type_add', {
+//   handleFormSubmit: (cardItem2) => {
+//     const newCardItem = new Section({
+//       items: cardItem2,
+//       renderer: (cardItem) => {
+//         newCardItem.addItem(createCard(cardItem));
+//       }
+//     }, cardContainer);
+//   }
+// });
+
+//Карточка
+// const popupElementAdd = new PopupWithForm('.popup_type_add', {
+//   handleFormSubmit: (cardItem) => {
+//       cardList.addItem(createCard(cardItem));
+//     }
+//   });
+// popupElementAdd.setEventListeners();

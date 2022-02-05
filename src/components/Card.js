@@ -3,6 +3,9 @@ export class Card {
     this._name = items.name;
     this._link = items.link;
     this._alt = items.name;
+    this._likes = items.likes.length;
+    this._cardId = items._id;
+    this._ownerId = items.owner._id;
     this._template = template;
     this._handleCardClick = handleCardClick;
   }
@@ -10,6 +13,7 @@ export class Card {
   _createView() {
     this._view = this._template.querySelector('.element').cloneNode(true);
     this._cardImage = this._view.querySelector('.element__photo');
+    this._likesCounter = this._view.querySelector('.element__counter');
   }
 
   _deleteButton = () => {
@@ -31,6 +35,7 @@ export class Card {
     this._view.querySelector('.element__name').textContent = this._name;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._alt + ". Изображение загружается либо недоступно";
+    this._likesCounter.textContent = this._likes;
     this._setEventListeners();
     return this._view
   };

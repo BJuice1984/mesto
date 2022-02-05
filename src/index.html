@@ -16,7 +16,9 @@
       </header>
       <main class="content">
         <section class="profile">
-          <img class="profile__avatar" src="<%=require('./images/Кусто.jpg')%>" alt="Фотография профиля" />
+          <div class="profile__container">
+            <img class="profile__avatar" src="<%=require('./images/Кусто.jpg')%>" alt="Фотография профиля" />
+          </div>
           <h1 class="profile__info">Жак-Ив Кусто</h1>
           <button class="button button_type_edit" type="button" aria-label="Редактировать"></button>
           <p class="profile__description">Исследователь океана</p>
@@ -122,11 +124,20 @@
     </div>
     <div class="popup popup_type_image">
       <div class="popup__window popup__window_type_image-opened">
-        <button class="popup__close-button popup__close-button_type_image" type="button" aria-label="Закрыть"></button>
+        <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
         <figure class="popup__content">
           <img class="popup__content popup__content_type_image" src="#" alt="Изображение загружается" />
           <figcaption class="popup__content popup__content_type_name"></figcaption>
         </figure>
+      </div>
+    </div>
+    <div class="popup popup_type_delete">
+      <div class="popup__window">
+        <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+        <div class="popup__content">
+          <h2 class="popup__header">Вы уверены?</h2>
+          <button class="popup__save-button" type="submit" aria-label="Да">Да</button>
+        </div>
       </div>
     </div>
     <template class="template">
@@ -134,6 +145,7 @@
         <img class="element__photo" src="#" alt="Изображение загружается" />
         <h2 class="element__name">${item.name}</h2>
         <button class="button button_type_heart-like" type="button" aria-label="Лайкнуть"></button>
+        <p class="element__counter">0</p>
         <button class="button button_type_delete" type="button" aria-label="Удалить"></button>
       </article>
     </template>
