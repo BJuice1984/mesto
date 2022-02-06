@@ -22,17 +22,13 @@ export class Card {
     }
   }
 
-  _deleteButton = () => {
-    this._view.remove();
-  };
-
   _likeButton(evt) {
     evt.target.classList.toggle('button_type_heart-like-active');
   };
 
   _setEventListeners () {
     this._view.querySelector('.button_type_heart-like').addEventListener('click', (evt) => {this._likeButton(evt)});
-    this._removeButton.addEventListener('click', () => {this._handleDeleteCardClick(this._cardId)});
+    this._removeButton.addEventListener('click', () => {this._handleDeleteCardClick(this._cardId, this._view)});
     this._cardImage.addEventListener('click', () => {this._handleCardClick(this._name, this._link)});
   };
 
@@ -43,7 +39,6 @@ export class Card {
     this._cardImage.alt = this._alt + ". Изображение загружается либо недоступно";
     this._likesCounter.textContent = this._likes;
     this._setEventListeners();
-    // console.log(this._curretUserId)
     return this._view
   };
 

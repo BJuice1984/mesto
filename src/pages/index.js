@@ -44,13 +44,17 @@ const cardContainer = '.elements';
 
 const handleCardClick = (name, link) => {popupElementImage.openPopup({name, link})};
 
-const handleDeleteCardClick = (cardId) => {
+const handleDeleteCardClick = (cardId, currentCard) => {
   popupElementDelete.setSubmitCallback(() => {
+    popupElementDelete.renderLoading('Удаление...')
     api.getDeleteCard(cardId)
       .then(() => {
+        currentCard.remove();
         popupElementDelete.closePopup()
       })
-    })
+      .catch(err => console.log(err))
+      .finally(() => popupElementDelete.renderLoading('Да'));
+    });
     popupElementDelete.openPopup();
   }
 
@@ -63,12 +67,14 @@ popupElementImage.setEventListeners();
 //Профиль
 const popupElementEdit = new PopupWithForm('.popup_type_edit',
 { handleFormSubmit: ({ name, about }) => {
+  popupElementEdit.renderLoading('Сохранение...')
   api.getChangeUserInfo({ name, about })
   .then((res) => {
   // console.log({ name: res.name, about: res.about })
   profileInfo.setUserInfo({ name: res.name, about: res.about })
   })
-  .catch(err => console.log(err));
+  .catch(err => console.log(err))
+  .finally(() => popupElementEdit.renderLoading('Сохранить'));
 }
 });
 popupElementEdit.setEventListeners();
@@ -76,11 +82,13 @@ popupElementEdit.setEventListeners();
 //Аватар
 const popupElementAvatar = new PopupWithForm('.popup_type_avatar', {
   handleFormSubmit: (values) => {
+    popupElementAvatar.renderLoading('Сохранение...')
     api.getChangeAvatar(values)
       .then((res) => {
         profileInfo.setUserAvatar({ avatar: res.avatar })
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => popupElementEdit.renderLoading('Сохранить'));
     }
 });
 popupElementAvatar.setEventListeners();
@@ -96,11 +104,14 @@ function createCard(item) {
 const popupElementAdd = new PopupWithForm('.popup_type_add', {
   handleFormSubmit: (cardItem) => {
     // console.log(cardItem)
+    popupElementAdd.renderLoading('Сохранение...')
     api.getNewCard(cardItem)
       .then((res) => {
     const newCardItem = createCard({ name: res.name, link: res.link, likes: res.likes, _id: res._id, owner: res.owner })
       document.querySelector(cardContainer).prepend(newCardItem)
       })
+      .catch(err => console.log(err))
+      .finally(() => popupElementAdd.renderLoading('Сохранить'));
   }
 });
 
