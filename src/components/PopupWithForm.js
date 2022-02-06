@@ -6,12 +6,14 @@ export class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
     this._currentForm = this._popup.querySelector('.popup__input-form');
     this._currentFormInputs = this._currentForm.querySelectorAll('.popup__input-text');
+    this._popupSaveButton = this._popup.querySelector('.popup__save-button');
   }
 
   _getInputValues() {
     const inputList = {}
     this._currentFormInputs.forEach(item => {
       inputList[item.name] = item.value;
+      // console.log(inputList)
     })
     return inputList;
   }
@@ -29,4 +31,14 @@ export class PopupWithForm extends Popup {
     this._currentForm.reset();
     super.closePopup();
   }
+
+  setSubmitCallback(callback) {
+    this._handleFormSubmit = callback;
+  }
+
+  renderLoading(text)  {
+    this._popupSaveButton.textContent = text;
+  }
+
+
 }
