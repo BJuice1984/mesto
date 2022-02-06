@@ -52,5 +52,13 @@ export class Api {
     .then(res => this._checkResponse(res))
   }
 
+  getDeleteCard(id) {
+    return fetch(`https://nomoreparties.co/v1/cohort-34/cards/${id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then(res => this._checkResponse(res))
+  }
+
 
 }

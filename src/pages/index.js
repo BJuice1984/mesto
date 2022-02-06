@@ -7,6 +7,7 @@ import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 import '../pages/index.css';
+import { Popup } from '../components/Popup.js';
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34',
@@ -21,14 +22,14 @@ const profileInfo = new UserInfo({
   avatarSelector: '.profile__avatar'
 });
 
-let userId = null;
+let curretUserId = null;
 
 api.getInitialUser()
   .then((res) => {
     // console.log(res)
     profileInfo.setUserInfo({ name: res.name, about: res.about });
     profileInfo.setUserAvatar({ avatar: res.avatar });
-    userId = res._id;
+    curretUserId = res._id;
   })
   .catch(err => console.log(err));
 
@@ -42,6 +43,19 @@ const cardTemplate = document.querySelector('.template').content;
 const cardContainer = '.elements';
 
 const handleCardClick = (name, link) => {popupElementImage.openPopup({name, link})};
+
+const handleDeleteCardClick = (cardId) => {
+  popupElementDelete.setSubmitCallback(() => {
+    api.getDeleteCard(cardId)
+      .then(() => {
+        popupElementDelete.closePopup()
+      })
+    })
+    popupElementDelete.openPopup();
+  }
+
+const popupElementDelete = new PopupWithForm('.popup_type_delete', {handleFormSubmit: () => {}});
+popupElementDelete.setEventListeners();
 
 const popupElementImage = new PopupWithImage('.popup_type_image');
 popupElementImage.setEventListeners();
@@ -73,7 +87,7 @@ popupElementAvatar.setEventListeners();
 
 //Функция создания карточки
 function createCard(item) {
-  const card = new Card(item, cardTemplate, handleCardClick);
+  const card = new Card(item, cardTemplate, curretUserId, handleCardClick, handleDeleteCardClick);
   const cardElement = card.render();
   return cardElement
 }
@@ -84,7 +98,7 @@ const popupElementAdd = new PopupWithForm('.popup_type_add', {
     // console.log(cardItem)
     api.getNewCard(cardItem)
       .then((res) => {
-    const newCardItem = createCard({ name: res.name, link: res.link, likes: res.likes, _id: res._id, owner: userId })
+    const newCardItem = createCard({ name: res.name, link: res.link, likes: res.likes, _id: res._id, owner: res.owner })
       document.querySelector(cardContainer).prepend(newCardItem)
       })
   }
@@ -100,7 +114,6 @@ api.getInitialCards()
     const cardList = new Section({
       items: initialCards,
       renderer: (cardItem) => {
-
         cardList.addItem(createCard(cardItem));
         },
       }, cardContainer

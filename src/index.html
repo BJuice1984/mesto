@@ -136,7 +136,9 @@
         <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
         <div class="popup__content">
           <h2 class="popup__header">Вы уверены?</h2>
-          <button class="popup__save-button" type="submit" aria-label="Да">Да</button>
+          <form name="formDelete" class="popup__input-form popup__input-form_type_delete" novalidate>
+            <button class="popup__save-button" type="submit" aria-label="Да">Да</button>
+          </form>
         </div>
       </div>
     </div>
@@ -146,7 +148,7 @@
         <h2 class="element__name">${item.name}</h2>
         <button class="button button_type_heart-like" type="button" aria-label="Лайкнуть"></button>
         <p class="element__counter">0</p>
-        <button class="button button_type_delete" type="button" aria-label="Удалить"></button>
+        <button class="button button_type_delete button_type_delete-disactive" type="button" aria-label="Удалить"></button>
       </article>
     </template>
   </body>

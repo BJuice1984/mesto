@@ -30,4 +30,10 @@ export class PopupWithForm extends Popup {
     this._currentForm.reset();
     super.closePopup();
   }
+
+  setSubmitCallback(callback) {
+    this._handleFormSubmit = callback;
+  }
+
+
 }
