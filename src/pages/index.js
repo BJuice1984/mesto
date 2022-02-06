@@ -7,7 +7,6 @@ import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 import '../pages/index.css';
-import { Popup } from '../components/Popup.js';
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34',
@@ -58,6 +57,20 @@ const handleDeleteCardClick = (cardId, currentCard) => {
     popupElementDelete.openPopup();
   }
 
+const handleLikeCardClick = (cardId, currentCard) => {
+  api.getAddLike(cardId)
+    .then((res) => {
+      currentCard.querySelector('.element__counter').textContent = res.likes.length})
+    .catch(err => console.log(err));
+}
+
+const handleDislikeCardClick = (cardId, currentCard) => {
+  api.getRemoveLike(cardId)
+    .then((res) => {
+      currentCard.querySelector('.element__counter').textContent = res.likes.length})
+    .catch(err => console.log(err));
+}
+
 const popupElementDelete = new PopupWithForm('.popup_type_delete', {handleFormSubmit: () => {}});
 popupElementDelete.setEventListeners();
 
@@ -88,14 +101,14 @@ const popupElementAvatar = new PopupWithForm('.popup_type_avatar', {
         profileInfo.setUserAvatar({ avatar: res.avatar })
       })
       .catch(err => console.log(err))
-      .finally(() => popupElementEdit.renderLoading('Сохранить'));
+      .finally(() => popupElementAvatar.renderLoading('Сохранить'));
     }
 });
 popupElementAvatar.setEventListeners();
 
 //Функция создания карточки
 function createCard(item) {
-  const card = new Card(item, cardTemplate, curretUserId, handleCardClick, handleDeleteCardClick);
+  const card = new Card(item, cardTemplate, curretUserId, handleCardClick, handleDeleteCardClick, handleLikeCardClick, handleDislikeCardClick);
   const cardElement = card.render();
   return cardElement
 }
@@ -108,8 +121,8 @@ const popupElementAdd = new PopupWithForm('.popup_type_add', {
     api.getNewCard(cardItem)
       .then((res) => {
     const newCardItem = createCard({ name: res.name, link: res.link, likes: res.likes, _id: res._id, owner: res.owner })
-      document.querySelector(cardContainer).prepend(newCardItem)
-      })
+        document.querySelector(cardContainer).prepend(newCardItem)
+        })
       .catch(err => console.log(err))
       .finally(() => popupElementAdd.renderLoading('Сохранить'));
   }
@@ -169,37 +182,3 @@ avatarButton.addEventListener('click', () => {
   popupElementAvatar.openPopup();
 });
 
-
-// let userId = null;
-// api.getAppInfo()
-//   .then(([ cardsArray, userData ]) => {
-//     userId = userData._id;
-//   })
-// function createCard(data) {
-//   // userId будет доступна здесь. Запрашивать его каждый раз при вызове createCard не нужно.
-// }
-
-// let initialCards = null;
-// api.getInitialCards()
-//   .then(res => { initialCards = res; console.log(initialCards) })
-//   .catch(err => console.log(err));
-
-
-// const popupElementAdd = new PopupWithForm('.popup_type_add', {
-//   handleFormSubmit: (cardItem2) => {
-//     const newCardItem = new Section({
-//       items: cardItem2,
-//       renderer: (cardItem) => {
-//         newCardItem.addItem(createCard(cardItem));
-//       }
-//     }, cardContainer);
-//   }
-// });
-
-//Карточка
-// const popupElementAdd = new PopupWithForm('.popup_type_add', {
-//   handleFormSubmit: (cardItem) => {
-//       cardList.addItem(createCard(cardItem));
-//     }
-//   });
-// popupElementAdd.setEventListeners();

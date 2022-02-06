@@ -60,5 +60,22 @@ export class Api {
     .then(res => this._checkResponse(res))
   }
 
+  getAddLike(id) {
+    return fetch(`https://nomoreparties.co/v1/cohort-34/cards/likes/${id}`, {
+      method: 'PUT',
+      headers: this._headers,
+    })
+    .then(res => this._checkResponse(res))
+  }
+
+  getRemoveLike(id) {
+    return fetch(`https://nomoreparties.co/v1/cohort-34/cards/likes/${id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then(res => this._checkResponse(res))
+  }
+
+
 
 }
