@@ -1,5 +1,6 @@
 export class Card {
-  constructor(items, template, curretUserId, handleCardClick, handleDeleteCardClick, handleLikeCardClick, handleDislikeCardClick) {
+  constructor(items, template, currentUserId, handleCardClick,
+              handleDeleteCardClick, handleLikeCardClick, handleDislikeCardClick) {
     this._name = items.name;
     this._link = items.link;
     this._alt = items.name;
@@ -7,7 +8,7 @@ export class Card {
     this._cardId = items._id;
     this._ownerId = items.owner._id;
     this._template = template;
-    this._curretUserId = curretUserId;
+    this._currentUserId = currentUserId;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCardClick = handleDeleteCardClick;
     this._handleLikeCardClick = handleLikeCardClick;
@@ -16,9 +17,8 @@ export class Card {
 
   _checkLikeCurrentUser() {
     this._likes.forEach((like) => {
-      if (like._id === this._curretUserId)
-      {
-        this._view.querySelector('.button_type_heart-like').classList.add('button_type_heart-like-active')
+      if (like._id === this._currentUserId) {
+        this._activeLike.classList.add('button_type_heart-like-active')
       }
     })
   }
@@ -28,7 +28,8 @@ export class Card {
     this._cardImage = this._view.querySelector('.element__photo');
     this._likesCounter = this._view.querySelector('.element__counter');
     this._removeButton = this._view.querySelector('.button_type_delete');
-    if (this._curretUserId === this._ownerId) {
+    this._activeLike = this._view.querySelector('.button_type_heart-like');
+    if (this._currentUserId === this._ownerId) {
       this._removeButton.classList.remove('button_type_delete-disactive');
     }
   }
@@ -37,25 +38,27 @@ export class Card {
     evt.target.classList.toggle('button_type_heart-like-active');
   };
 
-  _setEventListeners () {
-    this._view
-    .querySelector('.button_type_heart-like')
-    .addEventListener('click', (evt) => {
+  _setEventListeners() {
+    this._activeLike.addEventListener('click', (evt) => {
 
-if (this._view.querySelector('.button_type_heart-like').classList.contains('button_type_heart-like-active')) {
+        if (this._activeLike.classList.contains('button_type_heart-like-active')) {
 
-    {this._likeButton(evt);
-    this._handleDislikeCardClick(this._cardId, this._view)}
+          {
+            this._likeButton(evt);
+            this._handleDislikeCardClick(this._cardId, this._view)
+          }
 
-} else {
+        } else {
 
-  {this._likeButton(evt);
-  this._handleLikeCardClick(this._cardId, this._view)}
-}
-    });
+          {
+            this._likeButton(evt);
+            this._handleLikeCardClick(this._cardId, this._view)
+          }
+        }
+      });
 
-    this._removeButton.addEventListener('click', () => {this._handleDeleteCardClick(this._cardId, this._view)});
-    this._cardImage.addEventListener('click', () => {this._handleCardClick(this._name, this._link)});
+    this._removeButton.addEventListener('click', () => { this._handleDeleteCardClick(this._cardId, this._view) });
+    this._cardImage.addEventListener('click', () => { this._handleCardClick(this._name, this._link) });
   };
 
   render() {

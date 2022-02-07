@@ -26,8 +26,8 @@ export class FormValidator {
   };
 
   _showInputError(inputElement, errorMessage) {
-  const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
-  inputElement.classList.add(this._inputErrorClass);
+    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._errorClass);
   };
@@ -48,10 +48,10 @@ export class FormValidator {
   };
 
   enableValidation() {
-      this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-      this._buttonElement = this._formElement.querySelector(this._submitBtnSelector);
-      this._formElement.addEventListener('submit', evt => evt.preventDefault());
-      this._setEventListeners();
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._submitBtnSelector);
+    this._formElement.addEventListener('submit', evt => evt.preventDefault());
+    this._setEventListeners();
   };
 
   resetValidation() {
