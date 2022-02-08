@@ -1,6 +1,6 @@
 export class Card {
   constructor(items, template, currentUserId, handleCardClick,
-              handleDeleteCardClick, handleLikeCardClick, handleDislikeCardClick) {
+    handleDeleteCardClick, handleLikeCardClick, handleDislikeCardClick) {
     this._name = items.name;
     this._link = items.link;
     this._alt = items.name;
@@ -13,6 +13,11 @@ export class Card {
     this._handleDeleteCardClick = handleDeleteCardClick;
     this._handleLikeCardClick = handleLikeCardClick;
     this._handleDislikeCardClick = handleDislikeCardClick;
+  }
+
+  updateLikes(array) {
+    this._view.querySelector('.element__counter').textContent = array.likes.length;
+    this._activeLike.classList.toggle('button_type_heart-like-active');
   }
 
   _checkLikeCurrentUser() {
@@ -34,28 +39,15 @@ export class Card {
     }
   }
 
-  _likeButton(evt) {
-    evt.target.classList.toggle('button_type_heart-like-active');
-  };
-
   _setEventListeners() {
-    this._activeLike.addEventListener('click', (evt) => {
+    this._activeLike.addEventListener('click', () => {
 
-        if (this._activeLike.classList.contains('button_type_heart-like-active')) {
-
-          {
-            this._likeButton(evt);
-            this._handleDislikeCardClick(this._cardId, this._view)
-          }
-
-        } else {
-
-          {
-            this._likeButton(evt);
-            this._handleLikeCardClick(this._cardId, this._view)
-          }
-        }
-      });
+      if (this._activeLike.classList.contains('button_type_heart-like-active')) {
+        this._handleDislikeCardClick(this._cardId, this)
+      } else {
+        this._handleLikeCardClick(this._cardId, this)
+      }
+    });
 
     this._removeButton.addEventListener('click', () => { this._handleDeleteCardClick(this._cardId, this._view) });
     this._cardImage.addEventListener('click', () => { this._handleCardClick(this._name, this._link) });

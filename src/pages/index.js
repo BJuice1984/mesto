@@ -1,6 +1,8 @@
 import { Card } from '../components/Card.js';
-import { validateData, cardTemplate, cardContainer, infoInputEdit,
-        descriptionInputEdit, editButton, addButton, avatarButton } from '../utils/constants.js';
+import {
+  validateData, cardTemplate, cardContainer, infoInputEdit,
+  descriptionInputEdit, editButton, addButton, avatarButton
+} from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
@@ -24,13 +26,18 @@ const profileInfo = new UserInfo({
 
 let currentUserId = null;
 
-api.getInitialUser()
-  .then((res) => {
-    profileInfo.setUserInfo({ name: res.name, about: res.about });
-    profileInfo.setUserAvatar({ avatar: res.avatar });
-    currentUserId = res._id;
+Promise.all([api.getInitialUser(), api.getInitialCards()])
+  .then(([userData, initialCards]) => {
+    //установка данных пользователя
+    profileInfo.setUserInfo({ name: userData.name, about: userData.about });
+    profileInfo.setUserAvatar({ avatar: userData.avatar });
+    currentUserId = userData._id;
+    //отрисовка карточек
+    cardElement.addItems(initialCards)
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.log(err)
+  });
 
 const handleCardClick = (name, link) => { popupElementImage.openPopup({ name, link }) };
 
@@ -51,7 +58,7 @@ const handleDeleteCardClick = (cardId, currentCard) => {
 const handleLikeCardClick = (cardId, currentCard) => {
   api.getAddLike(cardId)
     .then((res) => {
-      currentCard.querySelector('.element__counter').textContent = res.likes.length
+      currentCard.updateLikes(res);
     })
     .catch(err => console.log(err));
 }
@@ -59,7 +66,7 @@ const handleLikeCardClick = (cardId, currentCard) => {
 const handleDislikeCardClick = (cardId, currentCard) => {
   api.getRemoveLike(cardId)
     .then((res) => {
-      currentCard.querySelector('.element__counter').textContent = res.likes.length
+      currentCard.updateLikes(res);
     })
     .catch(err => console.log(err));
 }
@@ -103,10 +110,18 @@ popupElementAvatar.setEventListeners();
 
 //Функция создания карточки
 function createCard(item) {
-  const card = new Card(item, cardTemplate, currentUserId, handleCardClick, handleDeleteCardClick, handleLikeCardClick, handleDislikeCardClick);
+  const card = new Card(item, cardTemplate, currentUserId, handleCardClick,
+    handleDeleteCardClick, handleLikeCardClick, handleDislikeCardClick);
   const cardElement = card.render();
   return cardElement
 }
+
+const cardElement = new Section({
+  renderer: (cardItem) => {
+    cardElement.addItem(createCard(cardItem));
+  },
+}, cardContainer
+)
 
 //Карточка
 const popupElementAdd = new PopupWithForm('.popup_type_add', {
@@ -115,7 +130,7 @@ const popupElementAdd = new PopupWithForm('.popup_type_add', {
     api.getNewCard(cardItem)
       .then((res) => {
         const newCardItem = createCard({ name: res.name, link: res.link, likes: res.likes, _id: res._id, owner: res.owner })
-        document.querySelector(cardContainer).prepend(newCardItem)
+        cardElement.addItem(newCardItem);
       })
       .then(() => popupElementAdd.closePopup())
       .catch(err => console.log(err))
@@ -123,20 +138,6 @@ const popupElementAdd = new PopupWithForm('.popup_type_add', {
   }
 });
 popupElementAdd.setEventListeners();
-
-//Загрузка массива карточек с сервера
-api.getInitialCards()
-  .then(initialCards => {
-    const cardList = new Section({
-      items: initialCards,
-      renderer: (cardItem) => {
-        cardList.addItem(createCard(cardItem));
-      },
-    }, cardContainer
-    );
-    cardList.addItems();
-  })
-  .catch(err => console.log(err));
 
 const formValidators = {} // создать экземпляры валидаторов всех форм
 // Включение валидации
