@@ -22,7 +22,6 @@ export class PopupWithForm extends Popup {
     this._currentForm.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-      this.closePopup();
     })
     super.setEventListeners();
   }
@@ -36,7 +35,7 @@ export class PopupWithForm extends Popup {
     this._handleFormSubmit = callback;
   }
 
-  renderLoading(text)  {
+  renderLoading(text='Подождите немножечко...') {
     this._popupSaveButton.textContent = text;
   }
 
