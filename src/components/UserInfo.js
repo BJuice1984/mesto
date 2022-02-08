@@ -1,8 +1,8 @@
 export class UserInfo {
-  constructor({ infoSelector, descriptionSelector, avatarSelector }) {
-    this._profileInfo = infoSelector;
-    this._profileDescription = descriptionSelector;
-    this._avatarSelector = avatarSelector;
+  constructor({ info, description, avatar }) {
+    this._profileInfo = document.querySelector(info);
+    this._profileDescription = document.querySelector(description);
+    this._avatarSelector = document.querySelector(avatar);
   };
 
   getUserInfo() {

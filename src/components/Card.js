@@ -16,7 +16,7 @@ export class Card {
   }
 
   updateLikes(array) {
-    this._view.querySelector('.element__counter').textContent = array.likes.length;
+    this._likesCounter.textContent = array.likes.length;
     this._activeLike.classList.toggle('button_type_heart-like-active');
   }
 

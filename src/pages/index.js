@@ -19,9 +19,9 @@ const api = new Api({
   }
 });
 const profileInfo = new UserInfo({
-  infoSelector: document.querySelector('.profile__info'),
-  descriptionSelector: document.querySelector('.profile__description'),
-  avatarSelector: document.querySelector('.profile__avatar')
+  info: '.profile__info',
+  description: '.profile__description',
+  avatar: '.profile__avatar'
 });
 
 let currentUserId = null;
